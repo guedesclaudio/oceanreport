@@ -8,6 +8,9 @@ import { UserContext } from '../Contexts/UserContext';
 import userApi from '../Services/Api/Users';
 import { treatEvent, handleForm } from '../Helpers/Form/form';
 import { signInMessageError } from '../Errors/SignIn';
+import styled from 'styled-components';
+import { AiFillGithub } from 'react-icons/ai';
+import { FcGoogle } from 'react-icons/fc';
 
 const SignIn: React.FC = () => {
   const [form, setForm] = useState<LoginUser>({ email: '', password: '' });
@@ -45,8 +48,18 @@ const SignIn: React.FC = () => {
           <Inputs>
             {loginInputs.map((value, index) => <Input key = {index} name = {value.name} type = {value.type} placeholder = {value.placeholder}
               onChange = {event =>  handleForm({ name: event.target.name, value: event.target.value }, form, setForm)} required/>)}
-            <Button>login</Button>
           </Inputs>
+          <Buttons>
+            <Button>login</Button>
+            <Button style = {{ background: 'white', color: 'black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              Entre com Google 
+              <Icon><FcGoogle/></Icon>
+            </Button>
+            <Button style = {{ background: 'black', color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              Entre com GitHub 
+              <Icon><AiFillGithub/></Icon>
+            </Button>
+          </Buttons>
         </form>
         <Link to = {'/signup'}>
           <Text>Não possui conta? Faça cadastro!</Text>
@@ -56,3 +69,18 @@ const SignIn: React.FC = () => {
   );
 };
 export default SignIn;
+
+const Buttons = styled.div`
+  height: 120px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+`;
+const Icon = styled.div`
+  font-size: 20px;
+  margin-left: 6px;
+  margin-top: 4px;
+`;

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
     margin: 40px auto;
     width: 320px;
-    height: 400px;
+    height: 300px;
     background-color: #2c2e3d;
     padding: 10px;
     border-radius: 6px;
@@ -49,7 +49,7 @@ export const Button = styled.button`
     width: 300px;
     height: 30px;
     background-color: none;
-    margin-top: 50px;
+    margin-top: 10px;
     background-color: #c2c2c2;
     border: none;
     cursor: pointer;
