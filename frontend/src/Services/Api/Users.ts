@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CreateUser, LoginUser } from '../../Types/types';
+import { CreateUser, LoginUser, LoginOAuth } from '../../Types/types';
 import { baseUrl } from '../BaseUrlApi';
 
 function post(userData: CreateUser) {
@@ -10,9 +10,14 @@ function login(userDataLogin: LoginUser) {
   return axios.post(`${baseUrl}/users/signin`, userDataLogin);
 }
 
+function oAuth(userDataOAuth: LoginOAuth) {
+  return axios.post(`${baseUrl}/users/signin/oauth`, userDataOAuth);
+}
+
 const userApi = {
   post,
-  login
+  login,
+  oAuth
 };
 
 export default userApi;

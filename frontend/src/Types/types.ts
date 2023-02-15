@@ -44,3 +44,9 @@ export type Post = {
     hour: string,
     postId: string
 };
+
+export type LoginOAuth = {
+    accessToken: string, 
+    email: string,
+    displayName: string
+};
