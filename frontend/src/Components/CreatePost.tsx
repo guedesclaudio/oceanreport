@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { treatEvent, handleForm } from '../Helpers/Form/form';
 import postsApi from '../Services/Api/Posts';
 import { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CreatePost: React.FC<any> = ({ setCallApi }) => {
   const [form, setForm] = useState<any>();
@@ -14,7 +16,7 @@ const CreatePost: React.FC<any> = ({ setCallApi }) => {
       setCallApi(true);
       setForm({});
     } catch (error) {
-      alert(error);
+      toast('Não foi possível realizar o post!');
     }
   }
   const def = post;
@@ -28,6 +30,7 @@ const CreatePost: React.FC<any> = ({ setCallApi }) => {
           value = {form?.content ? form.content : ''}/>
         <Button type = 'submit'>Publicar</Button>
       </form>
+      <ToastContainer theme = 'dark'/>
     </Container>
   );
 };

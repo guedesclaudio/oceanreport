@@ -10,6 +10,8 @@ import { useEffect, useState } from 'react';
 import reportApi from '../Services/Api/Report';
 import Footer from '../Components/Footer';
 import { ReportObject } from '../Types/types';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Report: React.FC = () => {
   const [report, setReport] = useState<ReportObject>();
@@ -20,7 +22,7 @@ const Report: React.FC = () => {
       console.log(reponse.data.report);
       setReport(reponse.data.report);
     } catch (error: any) {
-      console.error(error);
+      toast('Ocorreu um erro e estamos trabalhando nisso!');
     }
   }
   useEffect(() => {
@@ -54,6 +56,7 @@ const Report: React.FC = () => {
           </Warning>
         </Container>
       </>
+      <ToastContainer theme = 'dark'/>
       <Footer/>
     </>
   );

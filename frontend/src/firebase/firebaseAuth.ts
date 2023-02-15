@@ -1,4 +1,4 @@
-import { getAuth, signInWithPopup } from 'firebase/auth';
+import { getAuth, signInWithPopup, signInWithRedirect } from 'firebase/auth';
 import app from './firebaseConfig';
 
 const auth = getAuth(app);

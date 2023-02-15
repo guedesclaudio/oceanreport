@@ -44,6 +44,12 @@ export type ApplicationError = {
 
 export type UserDataLogin = Omit<UserData, "name">;
 
+export type OAuthDataLogin = {
+    accessToken: string, 
+    email: string,
+    displayName: string
+}
+
 export type UserToken = {
     userId: number,
     token: string

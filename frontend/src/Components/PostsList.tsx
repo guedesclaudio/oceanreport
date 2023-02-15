@@ -2,6 +2,8 @@ import Post from '../Components/Post';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import postsApi from '../Services/Api/Posts';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PostsList: React.FC<any> = ({ callApi, setCallApi }) => {
   const [posts, setPosts] = useState<any[]>();
@@ -12,7 +14,7 @@ const PostsList: React.FC<any> = ({ callApi, setCallApi }) => {
       const response = await postsApi.get();
       setPosts(response.data);
     } catch (error) {
-      alert(error);
+      toast('Ocorreu um erro e estamos trabalhando nisso!');
     }
   }
 
@@ -27,6 +29,7 @@ const PostsList: React.FC<any> = ({ callApi, setCallApi }) => {
       {posts?.map((value, index) => <Post key = {index} title = {value.Title} content = {value.Content} 
         username = {value.User.name} userId = {value.userId} date = {value.date} hour = {value.hour} postId = {value.id}
         setCallApi = {setCallApi}/>)}
+      <ToastContainer theme = 'dark'/>
     </Container>
   );
 };

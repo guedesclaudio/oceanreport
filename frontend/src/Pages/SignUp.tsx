@@ -7,6 +7,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import userApi from '../Services/Api/Users';
 import { CreateUser } from '../Types/types';
 import { signUpMessageError } from '../Errors/SignUp';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp: React.FC = () => {
   const [form, setForm] = useState<CreateUser>(initialObjectCreateUser);
@@ -14,7 +16,7 @@ const SignUp: React.FC = () => {
 
   async function signUp() {
     const passwordsAreSame = checkPasswords(form.password, form.confirmPassword);
-    if (!passwordsAreSame) return alert('Digite as senhas corretamentes');
+    if (!passwordsAreSame) return toast('Digite as senhas corretamentes');
     
     try {
       const report = window.confirm('Deseja receber reports diários para o email cadastro?');
@@ -22,8 +24,7 @@ const SignUp: React.FC = () => {
       await userApi.post(form);
       navigate('/signin');
     } catch (error: any) {
-      const status = error.response.status;
-      alert(signUpMessageError[status]);
+      toast('Não foi possível cadastrar');
     }
   }
   const def = signUp;
@@ -44,6 +45,7 @@ const SignUp: React.FC = () => {
         <Link to = {'/signin'}>
           <Text>Já tem conta? Faça login!</Text>
         </Link>
+        <ToastContainer theme = 'dark'/>
       </Container>
     </>
   );

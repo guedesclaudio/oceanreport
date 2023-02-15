@@ -13,7 +13,8 @@ import { AiFillGithub } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import socialMediaAuth from '../firebase/firebaseAuth'; 
 import { githubProvider, googleProvider } from '../firebase/firebaseMethod';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignIn: React.FC = () => {
   const [form, setForm] = useState<LoginUser>({ email: '', password: '' });
@@ -23,6 +24,7 @@ const SignIn: React.FC = () => {
   async function loginOAuth(provider: any) {
     try {
       const responseOAuth = await socialMediaAuth(provider);
+      console.log(responseOAuth);
       const { accessToken, email, displayName } = responseOAuth;
       const { token, userId } = (await userApi.oAuth({ accessToken, email, displayName })).data;
       
@@ -33,6 +35,9 @@ const SignIn: React.FC = () => {
           'Authorization': `Bearer ${token}`
         }
       });
+
+      navigate('/');
+      toast('Login efetuado com sucesso');
     } catch (error) {
       toast('Não foi possível realizar login');
     }
@@ -54,7 +59,7 @@ const SignIn: React.FC = () => {
       navigate('/');
     } catch (error: any) {
       const status = error.response.status;
-      alert(signInMessageError[status]);
+      toast(`Não foi possível realizar login. Error: ${signInMessageError[status]}`);
     }
   }
   const def = signInUser;
@@ -87,6 +92,7 @@ const SignIn: React.FC = () => {
         <Link to = {'/signup'}>
           <Text>Não possui conta? Faça cadastro!</Text>
         </Link>
+        <ToastContainer theme = 'dark'/>
       </Container>
     </>
   );
