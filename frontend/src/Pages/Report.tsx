@@ -63,7 +63,7 @@ const Report: React.FC = () => {
 };
 export default Report;
 
-const Container = styled.div`
+export const Container = styled.div`
     width: 600px;
     height: 100%;
     margin: -200px auto;
@@ -79,7 +79,7 @@ const Container = styled.div`
         margin-bottom: 80px;
     }
 `;
-const Title = styled.p`
+export const Title = styled.p`
     color: white;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;

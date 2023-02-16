@@ -15,6 +15,7 @@ const CreatePost: React.FC<any> = ({ setCallApi }) => {
       await postsApi.post(form, config);
       setCallApi(true);
       setForm({});
+      toast('Post compartilhado com sucesso!');
     } catch (error) {
       toast('Não foi possível realizar o post!');
     }

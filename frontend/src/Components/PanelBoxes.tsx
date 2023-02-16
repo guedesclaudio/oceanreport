@@ -3,7 +3,7 @@ import { BoxInformation } from '../Types/types';
 import { boxData } from '../Helpers/boxData';
 import { Link } from 'react-router-dom';
 
-const Box: React.FC<BoxInformation> = ({ image, title, text, url }) => {
+export const Box: React.FC<BoxInformation> = ({ image, title, text, url }) => {
   return (
     <Link to = {url}>
       <Content>

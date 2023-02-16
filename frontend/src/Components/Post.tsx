@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { Post as PostType } from '../Types/types';
 import { BsTrash } from 'react-icons/bs';
 import postsApi from '../Services/Api/Posts';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Post: React.FC<any> = ({
   username,
@@ -22,6 +24,7 @@ const Post: React.FC<any> = ({
       if (!confirm) return;
       await postsApi.remove(postId, config);
       setCallApi(true);
+      toast('Post removido com sucesso!');
     } catch (error) {
       alert(error);
     }
@@ -40,6 +43,7 @@ const Post: React.FC<any> = ({
         <Local>{title}</Local>
         <Content>{content}</Content>
       </Informations>
+      <ToastContainer theme = 'dark'/>
     </Container>
   );
 };

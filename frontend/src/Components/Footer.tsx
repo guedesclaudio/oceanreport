@@ -5,12 +5,14 @@ const Footer: React.FC = () => {
   return (
     <Container>
       <Content>
-        <Text>
-                    Desenvolvido por Claudio Guedes
-        </Text>
+        <Text>Desenvolvido por Claudio Guedes</Text>
         <Icons>
-          <AiFillGithub />
-          <AiFillLinkedin />
+          <Icon>
+            <a href='https://github.com/guedesclaudio' target = "_blank"><AiFillGithub/></a>
+          </Icon>
+          <Icon>
+            <a href='https://www.linkedin.com/in/claudio-guedes-0144b91a5/' target = "_blank"><AiFillLinkedin /></a>
+          </Icon>
         </Icons>
       </Content>
     </Container>
@@ -43,11 +45,16 @@ const Icons = styled.div`
     color: white;
     font-size: 22px;
     padding-left: 10px;
-    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+const Icon = styled.div`
+  cursor: pointer;
 
-    &&:hover {
-        color: grey;
-    }
+  &&:hover {
+      color: grey;
+  }
 `;
 const Content = styled.div`
     width: 320px;
