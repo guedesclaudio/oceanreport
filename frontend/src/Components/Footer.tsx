@@ -8,10 +8,10 @@ const Footer: React.FC = () => {
         <Text>Desenvolvido por Claudio Guedes</Text>
         <Icons>
           <Icon>
-            <a href='https://github.com/guedesclaudio' target = "_blank"><AiFillGithub/></a>
+            <a href='https://github.com/guedesclaudio' target = "_blank" rel="noreferrer"><AiFillGithub/></a>
           </Icon>
           <Icon>
-            <a href='https://www.linkedin.com/in/claudio-guedes-0144b91a5/' target = "_blank"><AiFillLinkedin /></a>
+            <a href='https://www.linkedin.com/in/claudio-guedes-0144b91a5/' target = "_blank" rel="noreferrer"><AiFillLinkedin /></a>
           </Icon>
         </Icons>
       </Content>

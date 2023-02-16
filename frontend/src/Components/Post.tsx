@@ -4,6 +4,9 @@ import { BsTrash } from 'react-icons/bs';
 import postsApi from '../Services/Api/Posts';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Modal from 'react-modal';
+import { useState } from 'react';
+import { customStyles, ModalButtons, ModalTitle, Cancel, Submit } from '../Styles/Modal';
 
 const Post: React.FC<any> = ({
   username,
@@ -17,11 +20,11 @@ const Post: React.FC<any> = ({
 }) => {
   const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '') : null;
   const config = { headers: { 'Authorization': `Bearer ${user.token}` } };
+  const [modalIsOpen, setIsOpen] = useState(false);
   
   async function removePost() {
     try {
-      const confirm = window.confirm('Tem certeza que deseja exluir?');
-      if (!confirm) return;
+      setIsOpen(false);
       await postsApi.remove(postId, config);
       setCallApi(true);
       toast('Post removido com sucesso!');
@@ -32,11 +35,18 @@ const Post: React.FC<any> = ({
   
   return (
     <Container>
+      <Modal isOpen={modalIsOpen} style = { customStyles as Modal.Styles }>
+        <ModalTitle>Tem certeza que deseja excluir?</ModalTitle>
+        <ModalButtons>
+          <Cancel onClick={() => setIsOpen(false)}>Não</Cancel>
+          <Submit onClick={removePost}>Sim</Submit>
+        </ModalButtons>
+      </Modal>
       <PostData>
         <Name>{username}</Name>
         <Icons>
           <Date>{date} - {hour}</Date>
-          {userId === user.userId ? <Icon onClick={removePost}><BsTrash/></Icon> : ''}
+          {userId === user.userId ? <Icon onClick={() => setIsOpen(true)}><BsTrash/></Icon> : ''}
         </Icons>
       </PostData>
       <Informations>
