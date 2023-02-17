@@ -9,25 +9,36 @@ import { CreateUser } from '../Types/types';
 import { signUpMessageError } from '../Errors/SignUp';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Modal from 'react-modal';
+import { customStyles, ModalButtons, ModalTitle, Cancel, Submit } from '../Styles/Modal';
 
 const SignUp: React.FC = () => {
   const [form, setForm] = useState<CreateUser>(initialObjectCreateUser);
+  const [modalIsOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
-  async function signUp() {
+  function openModal() {
+    if( window.event ) window.event.preventDefault();
+    setIsOpen(true);
+  }
+
+  async function signUp(report: boolean) {
     const passwordsAreSame = checkPasswords(form.password, form.confirmPassword);
-    if (!passwordsAreSame) return toast('Digite as senhas corretamentes');
+    if (!passwordsAreSame) return toast('Digite as senhas corretamente');
     
+    if (report) {
+      form.report = true;
+    } else {
+      setIsOpen(false);
+    }
+
     try {
-      const report = window.confirm('Deseja receber reports diários para o email cadastro?');
-      if (report) form.report = true;
       await userApi.post(form);
       navigate('/signin');
     } catch (error: any) {
       toast('Não foi possível cadastrar');
     }
   }
-  const def = signUp;
 
   return (
     <>
@@ -35,7 +46,7 @@ const SignUp: React.FC = () => {
       <Title>Ocean Report</Title>
       <SubTitle>Cadastre-se e tenha acesso a todas as informações</SubTitle>
       <Container>
-        <form onSubmit={() => treatEvent(def)}>
+        <form onSubmit={() => openModal()}>
           <Inputs>
             {userInputs.map((value, index) => <Input key = {index} name = {value.name} type = {value.type} placeholder = {value.placeholder}
               onChange = {event =>  handleForm({ name: event.target.name, value: event.target.value }, form, setForm)} required/>)}
@@ -47,6 +58,13 @@ const SignUp: React.FC = () => {
         </Link>
         <ToastContainer theme = 'dark'/>
       </Container>
+      <Modal isOpen={modalIsOpen} style = { customStyles as Modal.Styles }>
+        <ModalTitle>Deseja receber os reports por email?</ModalTitle>
+        <ModalButtons>
+          <Cancel onClick={() => signUp(false)}>Não</Cancel>
+          <Submit onClick={() => signUp(true)}>Sim</Submit>
+        </ModalButtons>
+      </Modal>
     </>
   );
 };
