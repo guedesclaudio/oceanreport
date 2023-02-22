@@ -10,6 +10,13 @@
   <img src= 'frontend/src/img/ocean-report-mobile.png'>
 </div>
 <br>
+
+# Arquitetura
+<div align="center">
+  <img src= 'frontend/src/img/arq-oceanreport.png'>
+  <br>
+</div>
+<br>
   
 # Funcionalidades
 - Fluxo de login e cadastro

@@ -19,7 +19,6 @@ const Report: React.FC = () => {
   async function refreshReport() {
     try {
       const reponse = await reportApi.get();
-      console.log(reponse.data.report);
       setReport(reponse.data.report);
     } catch (error: any) {
       toast('Ocorreu um erro e estamos trabalhando nisso!');
