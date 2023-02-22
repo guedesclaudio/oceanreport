@@ -52,8 +52,10 @@
 
 # Como iniciar
 1. Clone esse repositório
-2. Rode o comando docker-compose:
+2. Configure o .env de acordo com o .env.example no backend e frontend
+3. Rode o comando docker-compose:
 ```bash
 docker-compose up -d
 ```
+4. Acesse localhost:8080
 <br>
