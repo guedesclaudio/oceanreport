@@ -35,7 +35,6 @@ export async function loginOAuth(req: Request, res: Response) {
     const response = await usersService.oAuthLoginUser(oAuthDataLogin);
     return res.status(httpStatus.OK).send(response);
   } catch (error) {
-    console.log(error);
     return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
   }
 }
