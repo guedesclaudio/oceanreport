@@ -20,7 +20,7 @@ export default class PostsService {
 
     validateWords(postData: Post) {
         const postWords = postData.content.split(" ");
-        const existsOffensiveWords = postWords.filter(value => offensiveWords[value])
+        const existsOffensiveWords = (postWords.filter(value => offensiveWords[value])).length;
         if (existsOffensiveWords) throw postContentIsNotValid();
     }
 

@@ -26,8 +26,13 @@ describe("GET /posts", () => {
         id: post.id,
         Content: post.Content,
         Title: post.Title,
+        User: {
+            name: expect.any(String)
+        },
         createdAt: (post.createdAt).toISOString(),
         updatedAt: (post.updatedAt).toISOString(),
+        date: expect.any(String),
+        hour: expect.any(String),
         userId: post.userId
      }]);
   });
