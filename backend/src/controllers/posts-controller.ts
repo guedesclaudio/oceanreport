@@ -1,9 +1,9 @@
 import { AuthenticatedRequest, Post } from "@/types";
 import { Response, Request } from "express";
 import httpStatus from "http-status";
-import postsService from "@/services/posts-service";
+import PostsService from "@/services/posts-service";
 
-const posts = new postsService;
+const posts = new PostsService;
 
 export async function getPosts(req: Request, res: Response) {
 
@@ -24,6 +24,7 @@ export async function createPost(req: AuthenticatedRequest, res: Response) {
         await posts.insert(postData, Number(userId));
         return res.sendStatus(httpStatus.CREATED);
     } catch (error) {
+        if (error.name === "PostContentIsNotValid") return res.sendStatus(httpStatus.BAD_REQUEST);
         return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
     }
 }

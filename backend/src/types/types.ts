@@ -72,14 +72,18 @@ export type ReportObject = {
 type UserEmail = {
     email: string,
     name: string
-}
+};
 
 export type Email = {
     emailsList: UserEmail[],
     report: ReportObject
-}
+};
 
 export type Post = {
     title: string,
     content: string
-}
+};
+
+export type OffensiveWords = {
+    [key: string]: boolean
+};

@@ -16,7 +16,8 @@ const CreatePost: React.FC<any> = ({ setCallApi }) => {
       setCallApi(true);
       setForm({});
       toast('Post compartilhado com sucesso!');
-    } catch (error) {
+    } catch (error: any) {
+      if (error.response.status === 400) return toast('Evite palavras ofensivas ao publicar um post!');
       toast('Não foi possível realizar o post!');
     }
   }
