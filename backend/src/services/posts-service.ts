@@ -15,6 +15,7 @@ export default class PostsService {
             value.date = `${new Date(value.createdAt).getDate()}/${new Date(value.createdAt).getUTCMonth()}/${new Date(value.createdAt).getFullYear()}`
             
         });
+        this.checkPostDate();
         return list;
     }
 
@@ -22,6 +23,21 @@ export default class PostsService {
         const postWords = postData.content.split(" ");
         const existsOffensiveWords = (postWords.filter(value => offensiveWords[value])).length;
         if (existsOffensiveWords) throw postContentIsNotValid();
+    }
+
+    async checkPostDate() {
+        const today = new Date().getDate();
+        const list = await posts.findPostDate();
+
+        for (let i in list) {
+            const postDate = list[i].createdAt.toDateString().split(" ")[2];
+            const postId = list[i].id;
+            const postIsOld = today - Number(postDate) >= 3;
+
+            if (postIsOld) {
+                await posts.delete(postId);
+            }
+        }
     }
 
     async insert(postData: Post, userId: number) {
@@ -35,3 +51,8 @@ export default class PostsService {
         return posts.delete(postId);
     }
 }
+
+const postsService = new PostsService;
+const deleteOldPosts = postsService.checkPostDate;
+
+setInterval(deleteOldPosts, 86400000);

@@ -1,7 +1,7 @@
 <div align="center">
   <h1>OCEAN REPORT v1.0</h1>
   <br> 
-  Ocean Report é um software feito para gerenciar reports das condições oceânicas das praias do Rio de Janeiro. Os reports são feitos através de um algoritmo alimentado com base nos dados em tempo real de uma boia meteo-oceanográfica. Além disso, também é possível receber os reports diretamente por email, e compartilhar suas próprias observações sobre as condições oceânicas na sua região com outros usuários através da nossa timeline.
+  Ocean Report é um software livre, com o intuito de gerenciar reports das condições oceânicas das praias do Rio de Janeiro. Os reports são feitos através de um algoritmo alimentado com base nos dados em tempo real de uma boia meteo-oceanográfica e são atualizados de 1 em 1 hora, 7 dias por semana. Além disso, também é possível receber os reports diretamente por email, e compartilhar suas próprias observações em formato de posts sobre as condições oceânicas na sua região, contribuindo com outros usuários através da nossa timeline.
   <br>
   <br>
   <img src= 'frontend/src/img/ocean-report-home.png'>
@@ -21,13 +21,16 @@
 # Funcionalidades
 - Fluxo de login e cadastro
 - Login OAuth com google e github
+- Report gerado de 1 em 1 hora, 7 dias por semana
 - Opção de receber reports por email
-- Acompanhar reports de outros usuários
-- Compartilhar e excluir o seu próprio report
+- Acompanhar posts de outros usuários
+- Compartilhar e excluir posts
+- Filtro de palavras ofensivas ao publicar um post
+- Exclusão automática de posts antigos
 - Acesso a previsão de tempo e mar com link externo (Windy)
 
 # Pŕoximas atualizações para v2.0
-- Filtro de palavras ofensivas ao postar uma publicação
+- Aumentar a região de geração de reports
 - Opção de poder avaliar a acertividade do algoritmo que gera o report
 - Opção do usuário poder gerenciar sua conta
 

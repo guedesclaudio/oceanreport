@@ -37,4 +37,8 @@ export default class postsRepository {
             where: { id: postId }
         });
     }
+
+    async findPostDate() {
+        return prisma.post.findMany({});
+    }
 }
