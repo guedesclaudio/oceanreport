@@ -4,14 +4,13 @@ import { ReportObject } from "@/types";
 import { sendEmail } from "@/helpers";
 import usersRepository from "@/repositories/users-repository";
 import checkReport from "@/helpers/report-helpers";
-import Redis from "@/repositories/redis";
-const redis = new Redis("report");
+import { redis } from "@/config/redis";
 
 async function getReportToday() {
-  const reportExistsOnRedis = redis.exists();
+  const reportExistsOnRedis = redis.exists("report");
   
   if (reportExistsOnRedis) {
-    const response = await redis.get();
+    const response = await redis.get("report");
     return JSON.parse(response);
   };
   return "report não atualizado";
@@ -30,7 +29,7 @@ async function generateReport(): Promise<void> {
   const lastAtmosphereData = atmosphereData.slice(-1)[0];
 
   const report = generateReportObject(lastOceanData, lastAtmosphereData);
-  redis.set(JSON.stringify(report));
+  redis.set("report", JSON.stringify(report));
   
   if (itsTimeSendEmail) {
     const usersList = await usersRepository.findUsersWithReport();
@@ -60,12 +59,12 @@ function generateReportObject(oceanData: OceanData, atmData: AtmosphereData): Re
 }
 
 async function getOceanData(time: string): Promise<OceanData[]> {
-  const url = `https://micro-oceanreport-backend.vercel.app/ocean/${time.slice(0, -3)}`;
+  const url = `${process.env.API_REPORT_OCEAN_URL}/${time.slice(0, -3)}`;
   return (await axios.get(url)).data;
 }
 
 async function getAtmosphereData(time: string) {
-  const url = `https://micro-oceanreport-backend.vercel.app/atmosphere/${time.slice(0, -3)}`;
+  const url = `${process.env.API_REPORT_ATMOSPHERE_URL}/${time.slice(0, -3)}`;
   return (await axios.get(url)).data;
 }
 
