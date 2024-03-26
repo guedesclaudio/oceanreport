@@ -8,7 +8,7 @@ async function get() {
     const list: any = await postsRepository.list();
     list.forEach((value: any) => {
         value.hour = `${new Date(value.createdAt).getHours()}:${new Date(value.createdAt).getMinutes()}`;
-        value.date = `${new Date(value.createdAt).getDate()}/${new Date(value.createdAt).getUTCMonth()}/${new Date(value.createdAt).getFullYear()}`   
+        value.date = `${new Date(value.createdAt).getDate()}/${new Date(value.createdAt).getUTCMonth() + 1}/${new Date(value.createdAt).getFullYear()}`   
     });
     this.checkPostDate();
     return list;

@@ -22,7 +22,7 @@ const PostsList: React.FC<any> = ({ callApi, setCallApi }) => {
     listPosts();
     setCallApi(false);
   }, [callApi]);
-  
+ 
   return (
     <Container marginTop = {user ? '180px' : '-160px'}>
       {posts?.length === 0 ? <Message>Seja o primeiro a compartilhar um report</Message> : ''}
@@ -36,14 +36,14 @@ const PostsList: React.FC<any> = ({ callApi, setCallApi }) => {
 export default PostsList;
 
 const Container = styled.div<any>`
-    width: 500px;
-    margin: 0px auto;
-    margin-top: ${props => props.marginTop};
-    margin-bottom: 100px;
+  width: 500px;
+  margin: 0px auto;
+  margin-top: ${props => props.marginTop};
+  margin-bottom: 100px;
 
-    @media (max-width: 500px) {
-        width: 96%;
-    }
+  @media (max-width: 500px) {
+    width: 96%;
+  }
 `;
 const Message = styled.h1`
   margin-top: 280px;

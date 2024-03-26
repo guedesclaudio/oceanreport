@@ -17,28 +17,32 @@ async function getReportToday() {
 }
 
 async function generateReport(): Promise<void> {
-  const date = new Date;
-  const hour = date.getHours();
-  const timestamp = Date.now();
-  const time: string = timestamp.toString();
-  const itsTimeSendEmail = hour == 5 || hour == 17;
-  
-  const oceanData = await getOceanData(time);
-  const atmosphereData = await getAtmosphereData(time);
-  const lastOceanData = oceanData.slice(-1)[0];
-  const lastAtmosphereData = atmosphereData.slice(-1)[0];
+  try {
+    const date = new Date;
+    const hour = date.getHours();
+    const timestamp = Date.now();
+    const time: string = timestamp.toString();
+    const itsTimeSendEmail = hour == 5 || hour == 17;
+    
+    const oceanData = await getOceanData(time);
+    const atmosphereData = await getAtmosphereData(time);
+    const lastOceanData = oceanData.slice(-1)[0];
+    const lastAtmosphereData = atmosphereData.slice(-1)[0];
 
-  const report = generateReportObject(lastOceanData, lastAtmosphereData);
-  redis.set("report", JSON.stringify(report));
-  
-  if (itsTimeSendEmail) {
-    const usersList = await usersRepository.findUsersWithReport();
-    const emailsList = usersList.map((value) => value);
-    return sendEmail({emailsList, report});
+    const report = generateReportObject(lastOceanData, lastAtmosphereData);
+    redis.set("report", JSON.stringify(report));
+    
+    if (itsTimeSendEmail) {
+      const usersList = await usersRepository.findUsersWithReport();
+      const emailsList = usersList.map((value) => value);
+      return sendEmail({emailsList, report});
+    }
+  } catch (error) {
+    return console.log(error.message, 'report error')
   }
 }
 generateReport();
-setInterval(generateReport, 360000);
+setInterval(generateReport, 5000);
 
 function generateReportObject(oceanData: OceanData, atmData: AtmosphereData): ReportObject {
   const { Avg_W_Tmp1 } = oceanData;

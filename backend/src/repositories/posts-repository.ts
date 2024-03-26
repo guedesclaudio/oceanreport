@@ -19,7 +19,9 @@ async function create(postData: Post, userId: number) {
         data: { 
             Title: postData.title,
             Content: postData.content,
-            userId
+            userId,
+            createdAt: new Date(),
+            updatedAt: new Date(),
         }
     });
 }
