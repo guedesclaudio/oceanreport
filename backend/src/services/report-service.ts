@@ -3,7 +3,7 @@ import { OceanData, AtmosphereData } from "@/types";
 import { ReportObject } from "@/types";
 import { sendEmail } from "@/helpers";
 import usersRepository from "@/repositories/users-repository";
-import checkReport from "@/helpers/report-helpers";
+import { checkReport } from "@/helpers/report-helpers";
 import { redis } from "@/config/redis";
 
 async function getReportToday() {
@@ -38,16 +38,16 @@ async function generateReport(): Promise<void> {
   }
 }
 generateReport();
-setInterval(generateReport, 3600000);
+setInterval(generateReport, 360000);
 
 function generateReportObject(oceanData: OceanData, atmData: AtmosphereData): ReportObject {
   const { Avg_W_Tmp1 } = oceanData;
   const { Hsig } = oceanData;
   const { Avg_Wnd_Sp } = atmData;
-  const check = new checkReport(Number(Avg_W_Tmp1), Number(Hsig), Number(Avg_Wnd_Sp));
-  const waveCondition = check.waveConditions();
-  const temperatureCondition = check.temperatureConditions();
-  const windSpeedCondition = check.windConditions();
+  
+  const waveCondition = checkReport.waveConditions(Number(Hsig));
+  const temperatureCondition = checkReport.temperatureConditions(Number(Avg_W_Tmp1));
+  const windSpeedCondition = checkReport.windConditions(Number(Avg_Wnd_Sp));
   const reportObject = {
     waveCondition,
     temperatureCondition,
@@ -55,6 +55,7 @@ function generateReportObject(oceanData: OceanData, atmData: AtmosphereData): Re
     date: `${atmData.DAY}/${atmData.MONTH}/${atmData.YEAR} `,
     hour: `${Number(atmData.HOUR) - 3}:${atmData.MINUTE}`
   }
+  
   return reportObject;
 }
 
