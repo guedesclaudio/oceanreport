@@ -1,4 +1,5 @@
 import { Request } from "express";
+import { Post as PostData } from "@prisma/client";
 
 export type OceanData = {
     Hsig: string | null,
@@ -87,3 +88,11 @@ export type Post = {
 export type OffensiveWords = {
     [key: string]: boolean
 };
+
+export type PostAndUserName = (PostData & {
+    User: {
+        name: string;
+    };
+});
+
+export type PostWithBRDate = (PostData & {hour: string, date: string});

@@ -1,7 +1,8 @@
 import { prisma } from "@/config";
 import { UserData } from "@/types";
+import { Session, User } from "@prisma/client";
 
-async function insertUser(userData: UserData) {
+async function insertUser(userData: UserData): Promise<User> {
   return prisma.user.create({
     data: { 
       name: userData.name,
@@ -12,13 +13,13 @@ async function insertUser(userData: UserData) {
   });
 }
 
-async function findEmail(email: string) {
+async function findEmail(email: string): Promise<User> {
   return prisma.user.findUnique({
     where: { email }
   });
 }
 
-async function insertSession(userId: number, token: string) {
+async function insertSession(userId: number, token: string): Promise<Session> {
   return prisma.session.create({
     data: {
       userId,
@@ -27,9 +28,8 @@ async function insertSession(userId: number, token: string) {
   });
 }
 
-async function findUsersWithReport() {
+async function findUsersWithReport(): Promise<User[]> {
   return prisma.user.findMany({
-    select: { email: true, name: true },
     where: { report: true }
   });
 }

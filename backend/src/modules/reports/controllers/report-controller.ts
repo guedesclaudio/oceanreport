@@ -1,6 +1,6 @@
-import reportService from "@/services/report-service";
 import { Request, Response } from "express";
 import httpStatus from "http-status";
+import reportService from "../services/report-service";
 
 export async function getReport(req: Request, res: Response) {
   try {

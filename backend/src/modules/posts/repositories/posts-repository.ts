@@ -1,7 +1,8 @@
 import { prisma } from "@/config";
-import { Post } from "@/types";
+import { Post, PostAndUserName } from "@/types";
+import { Post as PostData } from "@prisma/client";
 
-async function list() {
+async function list(): Promise<PostAndUserName[]> {
     return prisma.post.findMany({
         orderBy: {
             createdAt: 'desc'
@@ -14,7 +15,7 @@ async function list() {
     });
 }
 
-async function create(postData: Post, userId: number) {
+async function create(postData: Post, userId: number): Promise<PostData> {
     return prisma.post.create({
         data: { 
             Title: postData.title,
@@ -26,19 +27,19 @@ async function create(postData: Post, userId: number) {
     });
 }
 
-async function deletePost(postId: number) {
+async function deletePost(postId: number): Promise<PostData> {
     return prisma.post.delete({
             where: { id: postId }
     });
 }
 
-async function find(postId: number) {
+async function find(postId: number): Promise<PostData> {
     return prisma.post.findUnique({
         where: { id: postId }
     });
 }
 
-async function findPostDate() {
+async function findPostDate(): Promise<PostData[]> {
     return prisma.post.findMany({});
 }
 

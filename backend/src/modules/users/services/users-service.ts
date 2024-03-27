@@ -1,9 +1,9 @@
 import { duplicatedEmailError, loginInvalidInformations } from "@/erros";
-import usersRepository from "@/repositories/users-repository";
 import { UserData, UserDataLogin, UserToken, OAuthDataLogin } from "@/types";
-import { User } from "@prisma/client";
+import { Session, User } from "@prisma/client";
 import { comparePassword, encryptedPassword, generateToken } from "@/helpers";
 import { exclude } from "@/helpers";
+import usersRepository from "../repositories/users-repository";
 
 async function insertUserWithData(userData: UserData): Promise<User> {
   await checkUniqueEmail(userData.email);
@@ -19,7 +19,7 @@ async function loginUser(userDataLogin: UserDataLogin): Promise<UserToken> {
   return exclude(session, "createdAt", "updatedAt", "id");
 }
 
-async function oAuthLoginUser(oAuthDataLogin: OAuthDataLogin) {
+async function oAuthLoginUser(oAuthDataLogin: OAuthDataLogin): Promise<Omit<Session, "createdAt" | "updatedAt" | "id">> {
   let user = await usersRepository.findEmail(oAuthDataLogin.email);
   const { email, accessToken, displayName } = oAuthDataLogin;
 
@@ -38,12 +38,12 @@ async function oAuthLoginUser(oAuthDataLogin: OAuthDataLogin) {
   return exclude(session, "createdAt", "updatedAt", "id");
 }
 
-async function checkUniqueEmail(email: string) {
+async function checkUniqueEmail(email: string): Promise<void> {
   const userExists = await usersRepository.findEmail(email);
   if (userExists) throw duplicatedEmailError;
 }
 
-async function checkLogin(UserDataLogin: UserDataLogin) {
+async function checkLogin(UserDataLogin: UserDataLogin): Promise<number> {
   const user = await usersRepository.findEmail(UserDataLogin.email);
   
   if (!user) throw loginInvalidInformations();

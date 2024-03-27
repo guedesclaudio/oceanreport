@@ -1,26 +1,27 @@
-import { postsRepository } from "@/repositories/posts-repository";
-import { Post } from "@/types";
+import { Post, PostWithBRDate } from "@/types";
 import { postNotFoundError } from "@/erros/post-not-found-error";
 import { offensiveWords } from "@/helpers/posts-helpers";
 import { postContentIsNotValid } from "@/erros/offensive-words-error";
+import { Post as PostData } from "@prisma/client";
+import { postsRepository } from "../repositories";
 
-async function get() {
-    const list: any = await postsRepository.list();
-    list.forEach((value: any) => {
+async function get(): Promise<PostWithBRDate[]> {
+    const list: PostData[] = await postsRepository.list();
+    list?.forEach((value: any) => {
         value.hour = `${new Date(value.createdAt).getHours()}:${new Date(value.createdAt).getMinutes()}`;
         value.date = `${new Date(value.createdAt).getDate()}/${new Date(value.createdAt).getUTCMonth() + 1}/${new Date(value.createdAt).getFullYear()}`   
     });
     this.checkPostDate();
-    return list;
+    return list as PostWithBRDate[];
 }
 
-function validateWords(postData: Post) {
+function validateWords(postData: Post): void {
     const postWords = postData.content.split(" ");
     const existsOffensiveWords = (postWords.filter(value => offensiveWords[value])).length;
     if (existsOffensiveWords) throw postContentIsNotValid();
 }
 
-async function checkPostDate() {
+async function checkPostDate(): Promise<void> {
     const today = new Date().getDate();
     const list = await postsRepository.findPostDate();
 
@@ -35,12 +36,12 @@ async function checkPostDate() {
     }
 }
 
-async function insert(postData: Post, userId: number) {
+async function insert(postData: Post, userId: number): Promise<PostData> {
     this.validateWords(postData);
     return postsRepository.create(postData, userId);
 }
 
-async function remove(postId: number) {
+async function remove(postId: number): Promise<PostData> {
     const postExists = await postsRepository.find(postId);
     if (!postExists) throw postNotFoundError();
     return postsRepository.deletePost(postId);

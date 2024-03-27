@@ -2,15 +2,15 @@ import axios from "axios";
 import { OceanData, AtmosphereData } from "@/types";
 import { ReportObject } from "@/types";
 import { sendEmail } from "@/helpers";
-import usersRepository from "@/repositories/users-repository";
 import { checkReport } from "@/helpers/report-helpers";
 import { redis } from "@/config/redis";
+import usersRepository from "@/modules/users/repositories/users-repository";
 
-async function getReportToday() {
-  const reportExistsOnRedis = redis.exists("report");
+async function getReportToday(): Promise<string | ReportObject> {
+  const reportExistsOnRedis: boolean = redis.exists("report");
   
   if (reportExistsOnRedis) {
-    const response = await redis.get("report");
+    const response: string = await redis.get("report");
     return JSON.parse(response);
   };
   return "report não atualizado";
@@ -68,7 +68,7 @@ async function getOceanData(time: string): Promise<OceanData[]> {
   return (await axios.get(url)).data;
 }
 
-async function getAtmosphereData(time: string) {
+async function getAtmosphereData(time: string): Promise<AtmosphereData[]> {
   const url = `${process.env.API_REPORT_ATMOSPHERE_URL}/${time.slice(0, -3)}`;
   return (await axios.get(url)).data;
 }

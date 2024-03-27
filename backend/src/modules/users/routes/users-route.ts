@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { createUser, loginUser, loginOAuth } from "@/controllers";
-import { createUserSchema, loginUserSchema, loginOAuthSchema } from "@/schemas/users-schema";
 import { validateBody } from "@/middlewares/schema-middleware";
+import { createUser, loginOAuth, loginUser } from "../controllers";
+import { createUserSchema, loginOAuthSchema, loginUserSchema } from "../schemas";
 
 const usersRouter = Router();
 

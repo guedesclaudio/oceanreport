@@ -1,7 +1,7 @@
 import { AuthenticatedRequest, Post } from "@/types";
 import { Response, Request } from "express";
 import httpStatus from "http-status";
-import { postsService } from "@/services";
+import { postsService } from "../services";
 
 export async function getPosts(req: Request, res: Response) {
 

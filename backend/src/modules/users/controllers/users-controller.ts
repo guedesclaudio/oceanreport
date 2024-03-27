@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
 import { UserData, UserDataLogin, OAuthDataLogin } from "@/types";
-import usersService from "@/services/users-service";
+import usersService from "../services/users-service";
 
 export async function createUser(req: Request, res: Response) {
   const userData = req.body
@@ -38,3 +38,4 @@ export async function loginOAuth(req: Request, res: Response) {
     return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
   }
 }
+
