@@ -38,7 +38,7 @@ async function generateReport(): Promise<void> {
       return sendEmail({emailsList, report});
     }
   } catch (error) {
-    return console.log(error.message, 'report error')
+    return console.log(error, 'report error')
   }
 }
 generateReport();
