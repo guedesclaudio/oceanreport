@@ -2,7 +2,7 @@ import BodyColor from '../Styles/BodyColor';
 import { Title, SubTitle, Container, Inputs, Input, Button, Text } from '../Styles/Common/styles';
 import { loginInputs } from '../Helpers/userInputs';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useContext } from 'react';
+import { useState, useContext, ChangeEvent } from 'react';
 import { LoginUser } from '../Types/types';
 import { UserContext } from '../Contexts/UserContext';
 import userApi from '../Services/Api/Users';
@@ -72,7 +72,7 @@ const SignIn: React.FC = () => {
         <form onSubmit={() => treatEvent(def)}>
           <Inputs>
             {loginInputs.map((value, index) => <Input key = {index} name = {value.name} type = {value.type} placeholder = {value.placeholder}
-              onChange = {event =>  handleForm({ name: event.target.name, value: event.target.value }, form, setForm)} required/>)}
+              onChange = {(event: ChangeEvent<HTMLInputElement>) =>  handleForm({ name: event.target.name, value: event.target.value }, form, setForm)} required/>)}
           </Inputs>
           <Buttons>
             <Button>login</Button>

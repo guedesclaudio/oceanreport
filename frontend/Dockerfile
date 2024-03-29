@@ -1,16 +1,21 @@
-FROM node:16.19.0
+FROM node:16.19.0 AS builder
 
 WORKDIR /app
 
-COPY . .
+COPY package*.json ./
 
-RUN npm i --force
+RUN npm i
+
+COPY . .
 
 RUN npm run build
 
-RUN mkdir -p /var/www/html
-RUN mv build/* /var/www/html
+FROM node:16.19.0-alpine
 
-WORKDIR /
+WORKDIR /app
 
-RUN rm -rf /app
+COPY --from=builder /app/build ./build
+
+CMD ["npx", "serve", "-s", "build"]
+
+EXPOSE 5000

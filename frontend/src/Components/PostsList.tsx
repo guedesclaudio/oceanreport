@@ -38,7 +38,7 @@ export default PostsList;
 const Container = styled.div<any>`
   width: 500px;
   margin: 0px auto;
-  margin-top: ${props => props.marginTop};
+  margin-top: ${(props: {marginTop: string}) => props.marginTop};
   margin-bottom: 100px;
 
   @media (max-width: 500px) {

@@ -47,8 +47,8 @@ const Container = styled.div<ContainerType>`
     width: 40vw;
     height: 100vh;
     z-index: 1;
-    display: ${(props) => props.displaySideBar || 'none'};
-    animation: ${(props) => props.animationSideBar || 'none'};
+    display: ${(props: {displaySideBar: string}) => props.displaySideBar || 'none'};
+    animation: ${(props: {animationSideBar: string}) => props.animationSideBar || 'none'};
     @keyframes show {
         from {
             margin-right: -1000px;

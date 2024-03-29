@@ -6,7 +6,6 @@ function get() {
 }
 
 function post(body: any, config: any) {
-  console.log(body, 'body')
   return axios.post(`${baseUrl}/posts`, body, config);
 }
 

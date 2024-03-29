@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { treatEvent, handleForm } from '../Helpers/Form/form';
 import postsApi from '../Services/Api/Posts';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -26,9 +26,9 @@ const CreatePost: React.FC<any> = ({ setCallApi }) => {
   return (
     <Container>
       <form onSubmit={() => treatEvent(def)}>
-        <TitleInput placeholder = 'local...' name = 'title' onChange = {event =>  handleForm({ name: event.target.name, value: event.target.value }, form, setForm)} required
+        <TitleInput placeholder = 'local...' name = 'title' onChange = {(event: ChangeEvent<HTMLInputElement>) =>  handleForm({ name: event.target.name, value: event.target.value }, form, setForm)} required
           value = {form?.title ? form.title : ''}/>
-        <ContentInput placeholder = 'depoimento...' name = 'content' onChange = {event =>  handleForm({ name: event.target.name, value: event.target.value }, form, setForm)} required
+        <ContentInput placeholder = 'depoimento...' name = 'content' onChange = {(event: ChangeEvent<HTMLInputElement>) =>  handleForm({ name: event.target.name, value: event.target.value }, form, setForm)} required
           value = {form?.content ? form.content : ''}/>
         <Button type = 'submit'>Publicar</Button>
       </form>

@@ -2,7 +2,7 @@ import { userInputs } from '../Helpers/userInputs';
 import BodyColor from '../Styles/BodyColor';
 import { Title, SubTitle, Container, Inputs, Input, Button, Text } from '../Styles/Common/styles';
 import { treatEvent, handleForm, initialObjectCreateUser, checkPasswords } from '../Helpers/Form/form';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import userApi from '../Services/Api/Users';
 import { CreateUser } from '../Types/types';
@@ -49,7 +49,7 @@ const SignUp: React.FC = () => {
         <form onSubmit={() => openModal()}>
           <Inputs>
             {userInputs.map((value, index) => <Input key = {index} name = {value.name} type = {value.type} placeholder = {value.placeholder}
-              onChange = {event =>  handleForm({ name: event.target.name, value: event.target.value }, form, setForm)} required/>)}
+              onChange = {(event: ChangeEvent<HTMLInputElement>) =>  handleForm({ name: event.target.name, value: event.target.value }, form, setForm)} required/>)}
             <Button type = 'submit'>cadastrar</Button>
           </Inputs>
         </form>
