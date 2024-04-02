@@ -1,10 +1,10 @@
-import app, { init } from "./app";
+import app, { init } from "../src/app";
 import dotenv from "dotenv";
-import { logger } from "./config";
-import { runCommands } from "./helpers";
+import { logger } from "../src/config";
+import { runCommands } from "../src/helpers";
 dotenv.config();
 
-const PORT = +process.env.PORT || 4000;
+const PORT = process?.env?.PORT || 4000;
 
 init().then(() => {
   app.listen(PORT, () => {
