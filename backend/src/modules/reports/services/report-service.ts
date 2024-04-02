@@ -42,7 +42,6 @@ async function generateReport(): Promise<void> {
   }
 }
 generateReport();
-setInterval(generateReport, 5000);
 
 function generateReportObject(oceanData: OceanData, atmData: AtmosphereData): ReportObject {
   const { Avg_W_Tmp1 } = oceanData;
@@ -74,7 +73,8 @@ async function getAtmosphereData(time: string): Promise<AtmosphereData[]> {
 }
 
 const reportService = {
-  getReportToday
+  getReportToday,
+  generateReport
 };
 
 export default reportService;

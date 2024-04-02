@@ -1,4 +1,5 @@
 import { createClient } from "redis";
+import { logger } from "./log";
 
 let redisClient: any;
 
@@ -7,7 +8,7 @@ async function runRedis(): Promise<void> {
     socket: { host: process.env.REDIS_HOST || "localhost" }
   });
   await redisClient.connect();
-  console.log('redis connect with success')
+  logger.info('redis was connected with success')
 }
 runRedis();
 

@@ -14,6 +14,7 @@ const PostsList: React.FC<any> = ({ callApi, setCallApi }) => {
       const response = await postsApi.get();
       setPosts(response.data);
     } catch (error) {
+      console.error(error);
       toast('Ocorreu um erro e estamos trabalhando nisso!');
     }
   }

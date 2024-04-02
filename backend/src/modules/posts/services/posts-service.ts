@@ -54,6 +54,3 @@ export const postsService = {
     validateWords,
     get
 }
-
-const deleteOldPosts = postsService.checkPostDate;
-setInterval(deleteOldPosts, 86400000);
