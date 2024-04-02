@@ -5,7 +5,7 @@ let redisClient: any;
 
 async function runRedis(): Promise<void> {
   redisClient = createClient({
-    socket: { host: process.env.REDIS_HOST || "localhost" }
+    url: process.env.REDIS_URL
   });
   await redisClient.connect();
   logger.info('redis was connected with success')
