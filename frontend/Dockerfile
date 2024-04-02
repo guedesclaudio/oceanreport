@@ -1,21 +1,23 @@
 FROM node:16.19.0 AS builder
 
-WORKDIR /app
-
-COPY package*.json ./
-
-RUN npm i
+WORKDIR /tmp/react
 
 COPY . .
 
+RUN rm -rf node_modules
+RUN npm install
+
 RUN npm run build
 
-# Production
-FROM node:16.19.0-alpine
+RUN mkdir -p /var/www/html
 
-WORKDIR /app
+RUN mv build/* /var/www/html
 
-COPY --from=builder /app/build ./build
+VOLUME /var/www/html
+
+WORKDIR /
+
+RUN rm -rf /tmp/react
 
 CMD ["npx", "serve", "-s", "build"]
 
