@@ -55,20 +55,24 @@ const Content = styled.div`
     height: 340px;
     border-radius: 6px 6px 0px 0px;
     @media (max-width: 400px) {
-      width: 98vw;
+      width: 96vw;
     }
   }
     
   &&:hover {
     transform: scale(1.1);
+
+    @media (max-width: 600px) {
+      transform: scale(1.1);
+    } 
   }
 
   @media (max-width: 1200px) {
     margin-top: 20px;
   }
+
   @media (max-width: 400px) {
     width: 100%;
-    transform: none;
   }
 `;
 const BoxFooter = styled.div`
