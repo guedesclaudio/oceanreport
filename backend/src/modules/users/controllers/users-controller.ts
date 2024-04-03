@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
-import { UserData, UserDataLogin, OAuthDataLogin } from "@/types";
+import { UserData, UserDataLogin, OAuthDataLogin } from "../../../types";
 import usersService from "../services/users-service";
-import { logger } from "@/config";
+import { logger } from "../../../config";
 
 export async function createUser(req: Request, res: Response) {
   const userData = req.body

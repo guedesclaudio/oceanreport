@@ -1,9 +1,9 @@
 import { NextFunction, Response } from "express";
 import httpStatus from "http-status";
 import * as jwt from "jsonwebtoken";
-import { unauthorizedError } from "@/erros";
-import { prisma } from "@/config";
-import { AuthenticatedRequest, JWTPayload } from "@/types";
+import { unauthorizedError } from "../erros";
+import { prisma } from "../config";
+import { AuthenticatedRequest, JWTPayload } from "../types";
 
 export async function authenticateToken(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   const authHeader = req.header("Authorization");

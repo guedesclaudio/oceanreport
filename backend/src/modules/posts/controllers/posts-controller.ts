@@ -2,7 +2,7 @@ import { AuthenticatedRequest, Post } from "@/types";
 import { Response, Request } from "express";
 import httpStatus from "http-status";
 import { postsService } from "../services";
-import { logger } from "@/config";
+import { logger } from "../../../config";
 
 export async function getPosts(req: Request, res: Response) {
 

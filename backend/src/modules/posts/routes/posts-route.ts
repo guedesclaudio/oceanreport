@@ -1,6 +1,5 @@
 import { Router } from "express";
-import { authenticateToken } from "@/middlewares";
-import { validateBody, validateParams } from "@/middlewares";
+import { authenticateToken, validateParams, validateBody } from "../../../middlewares";
 import { createPostSchema, deletePostSchema } from "../schemas";
 import { createPost, deletePost, getPosts } from "../controllers";
 

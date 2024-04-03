@@ -1,5 +1,5 @@
-import { prisma } from "@/config";
-import { Post, PostAndUserName } from "@/types";
+import { prisma } from "../../../config";
+import { Post, PostAndUserName } from "../../../types";
 import { Post as PostData } from "@prisma/client";
 
 async function list(): Promise<PostAndUserName[]> {

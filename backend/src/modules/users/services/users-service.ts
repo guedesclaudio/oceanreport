@@ -1,8 +1,8 @@
-import { duplicatedEmailError, loginInvalidInformations } from "@/erros";
-import { UserData, UserDataLogin, UserToken, OAuthDataLogin } from "@/types";
+import { duplicatedEmailError, loginInvalidInformations } from "../../../erros";
+import { UserData, UserDataLogin, UserToken, OAuthDataLogin } from "../../../types";
 import { Session, User } from "@prisma/client";
-import { comparePassword, encryptedPassword, generateToken } from "@/helpers";
-import { exclude } from "@/helpers";
+import { comparePassword, encryptedPassword, generateToken } from "../../../helpers";
+import { exclude } from "../../../helpers";
 import usersRepository from "../repositories/users-repository";
 
 async function insertUserWithData(userData: UserData): Promise<User> {

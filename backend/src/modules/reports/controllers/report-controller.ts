@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
 import reportService from "../services/report-service";
-import { logger } from "@/config";
+import { logger } from "../../../config";
 
 export async function getReport(req: Request, res: Response) {
   try {

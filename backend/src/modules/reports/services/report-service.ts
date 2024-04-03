@@ -1,10 +1,9 @@
 import axios from "axios";
-import { OceanData, AtmosphereData } from "@/types";
-import { ReportObject } from "@/types";
-import { sendEmail } from "@/helpers";
-import { checkReport } from "@/helpers/report-helpers";
-import { redis } from "@/config/redis";
-import usersRepository from "@/modules/users/repositories/users-repository";
+import { OceanData, AtmosphereData, ReportObject } from "../../../types";
+import { sendEmail } from "../../../helpers";
+import { checkReport } from "../../../helpers/report-helpers";
+import { redis } from "../../../config/redis";
+import usersRepository from "../../../modules/users/repositories/users-repository";
 
 async function getReportToday(): Promise<string | ReportObject> {
   const reportExistsOnRedis: boolean = redis.exists("report");

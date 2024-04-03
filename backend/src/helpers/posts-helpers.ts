@@ -1,4 +1,4 @@
-import { OffensiveWords } from "@/types";
+import { OffensiveWords } from "../types";
 
 export const offensiveWords = {
     merda: true, 

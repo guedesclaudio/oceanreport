@@ -1,4 +1,4 @@
-import { ApplicationError } from "@/types";
+import { ApplicationError } from "../types";
 
 export function postContentIsNotValid(): ApplicationError {
   return {

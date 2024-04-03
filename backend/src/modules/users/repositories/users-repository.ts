@@ -1,5 +1,5 @@
-import { prisma } from "@/config";
-import { UserData } from "@/types";
+import { prisma } from "../../../config";
+import { UserData } from "../../../types";
 import { Session, User } from "@prisma/client";
 
 async function insertUser(userData: UserData): Promise<User> {

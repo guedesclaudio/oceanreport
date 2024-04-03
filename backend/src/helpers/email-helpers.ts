@@ -1,4 +1,4 @@
-import { Email } from '@/types';
+import { Email } from '../types';
 import sgMail from '@sendgrid/mail';
 import dotenv from "dotenv";
 dotenv.config();

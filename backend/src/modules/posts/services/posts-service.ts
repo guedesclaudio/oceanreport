@@ -1,7 +1,7 @@
-import { Post, PostWithBRDate } from "@/types";
-import { postNotFoundError } from "@/erros/post-not-found-error";
-import { offensiveWords } from "@/helpers/posts-helpers";
-import { postContentIsNotValid } from "@/erros/offensive-words-error";
+import { Post, PostWithBRDate } from "../../../types";
+import { postNotFoundError, } from "../../../erros/post-not-found-error";
+import { offensiveWords } from "../../../helpers/posts-helpers";
+import { postContentIsNotValid } from "../../../erros/offensive-words-error";
 import { Post as PostData } from "@prisma/client";
 import { postsRepository } from "../repositories";
 
