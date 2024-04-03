@@ -63,7 +63,7 @@ const Content = styled.div`
     transform: scale(1.1);
 
     @media (max-width: 600px) {
-      transform: scale(1.1);
+      transform: none;
     } 
   }
 
