@@ -24,7 +24,10 @@ const SignUp: React.FC = () => {
 
   async function signUp(report: boolean) {
     const passwordsAreSame = checkPasswords(form.password, form.confirmPassword);
-    if (!passwordsAreSame) return toast('Digite as senhas corretamente');
+    if (!passwordsAreSame) {
+      setIsOpen(false);
+      return toast('Digite as senhas corretamente');
+    }
     
     if (report) {
       form.report = true;

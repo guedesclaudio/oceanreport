@@ -27,48 +27,49 @@ const PanelBoxes: React.FC = () => {
 export default PanelBoxes;
 
 const Container = styled.div`
-    width: 1200px;
-    height: 100%;
-    margin: -160px auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  width: 1200px;
+  height: 100%;
+  margin: -160px auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
     
-    @media (max-width: 1200px) {
-        width: 100%;
-        flex-direction: column;
-        justify-content: center;
-    }
+  @media (max-width: 1200px) {
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+  }
 `;
 const Content = styled.div`
-    width: 380px;
-    height: 100%;
-    -webkit-box-shadow: -2px -4px 110px -23px rgba(20,13,20,1);
-    -moz-box-shadow: -2px -4px 110px -23px rgba(20,13,20,1);
-    box-shadow: -2px -4px 110px -23px rgba(20,13,20,1);
-    cursor: pointer;
-    transition: 1.4s;
+  width: 380px;
+  height: 100%;
+  -webkit-box-shadow: -2px -4px 110px -23px rgba(20,13,20,1);
+  -moz-box-shadow: -2px -4px 110px -23px rgba(20,13,20,1);
+  box-shadow: -2px -4px 110px -23px rgba(20,13,20,1);
+  cursor: pointer;
+  transition: 1.4s;
+  border-radius: 6px 6px 0px 0px;
+
+  && img {
+    width: 100%;
+    height: 340px;
     border-radius: 6px 6px 0px 0px;
-
-    && img {
-        width: 100%;
-        height: 340px;
-        border-radius: 6px 6px 0px 0px;
-        @media (max-width: 400px) {
-          width: 98vw;
-        }
-    }
-    
-    &&:hover {
-        transform: scale(1.1);
-    }
-
-    @media (max-width: 1200px) {
-        margin-top: 20px;
-    }
     @media (max-width: 400px) {
-        width: 100%;
+      width: 98vw;
     }
+  }
+    
+  &&:hover {
+    transform: scale(1.1);
+  }
+
+  @media (max-width: 1200px) {
+    margin-top: 20px;
+  }
+  @media (max-width: 400px) {
+    width: 100%;
+    transform: scale(1.0);
+  }
 `;
 const BoxFooter = styled.div`
     width: 100%;

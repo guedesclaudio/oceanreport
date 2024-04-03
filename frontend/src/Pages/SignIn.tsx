@@ -38,7 +38,7 @@ const SignIn: React.FC = () => {
       navigate('/');
       toast('Login efetuado com sucesso');
     } catch (error) {
-      toast('Não foi possível realizar login');
+      toast(`Não foi possível realizar login. Ocorreu um erro: ${error}`);
     }
   }
 
@@ -58,7 +58,7 @@ const SignIn: React.FC = () => {
       navigate('/');
     } catch (error: any) {
       const status = error.response.status;
-      toast(`Não foi possível realizar login. Error: ${signInMessageError[status]}`);
+      toast(`Não foi possível realizar login. Ocorreu um erro: ${signInMessageError[status]}`);
     }
   }
   const def = signInUser;
@@ -78,14 +78,14 @@ const SignIn: React.FC = () => {
             <Button>login</Button>
             <Button style = {{ background: 'white', color: 'black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
               onClick = {() => loginOAuth(googleProvider)}>
-              Entre com Google 
+              entre com Google 
               <Icon><FcGoogle/></Icon>
             </Button>
-            <Button style = {{ background: 'black', color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+            {/* <Button style = {{ background: 'black', color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
               onClick = {() => loginOAuth(githubProvider)}>
               Entre com GitHub 
               <Icon><AiFillGithub/></Icon>
-            </Button>
+            </Button> */}
           </Buttons>
         </form>
         <Link to = {'/signup'}>

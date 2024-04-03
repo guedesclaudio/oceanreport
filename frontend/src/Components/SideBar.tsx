@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { links } from '../Helpers/Menu/links';
+import { removeLogin } from '../Helpers/removeLogin';
+import { windyUrl } from '../Helpers/windyUrl';
 
 export const SideBar: React.FC<any> = ({ 
   displaySideBar, 
@@ -10,6 +12,7 @@ export const SideBar: React.FC<any> = ({
   setAnimationSideBar, 
   setIcon }) => {
   const navigate = useNavigate();
+  const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '') : null;
 
   function openPage(route: string) {
     setIcon(<RxHamburgerMenu/>);
@@ -21,11 +24,15 @@ export const SideBar: React.FC<any> = ({
   return (
     <Container displaySideBar = {displaySideBar} animationSideBar = {animationSideBar}>
       <Options>
+        <Option onClick = {user ? () => removeLogin(navigate) : () => navigate('/signin')}>
+          {user ? 'Sair': 'Login'}
+        </Option>
+        
         {links?.map((value, index) => <Option key = {index} onClick = {() => openPage(value.url)}>{value.name}</Option>)}
-        <a href = "https://www.windy.com/-22.973/-43.149/waves?swell1,-22.980,-43.147,15" target = "_blank" rel="noreferrer">
+
+        <a href = {windyUrl} target = "_blank" rel="noreferrer">
           <Option>Previsão</Option>
         </a>
-        <Option onClick = {() => openPage('/contact')}>Contato</Option>
       </Options>
     </Container>
   );

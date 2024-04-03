@@ -6,6 +6,8 @@ import { IoCloseCircleOutline } from 'react-icons/io5';
 import { useState } from 'react';
 import SideBar from './SideBar';
 import { links } from '../Helpers/Menu/links';
+import { removeLogin } from '../Helpers/removeLogin';
+import { windyUrl } from '../Helpers/windyUrl';
 
 const TopBar: React.FC = () => {
   const [displaySideBar, setDisplaySideBar] = useState('none');
@@ -26,21 +28,16 @@ const TopBar: React.FC = () => {
     setTimeout(() => setDisplaySideBar('none'), 500);
   }
 
-  function out() {
-    localStorage.removeItem('user');
-    return navigate('/signin');
-  }
-
   return (
     <>
       <Container>
         <Logo/>
         <Links>
-          <p onClick = {user ? out : () => navigate('/signin')}>
+          <p onClick = {user ? () => removeLogin(navigate) : () => navigate('/signin')}>
             {user ? 'Sair': 'Login'}
           </p>
           {links?.map((value, index) => <Link key = {index} to = {value.url}><p>{value.name}</p></Link>)}
-          <a href = "https://www.windy.com/-22.973/-43.149/waves?swell1,-22.980,-43.147,15" target = "_blank" rel="noreferrer">
+          <a href = {windyUrl} target = "_blank" rel="noreferrer">
             <p>Previsão</p>
           </a>
         </Links>
