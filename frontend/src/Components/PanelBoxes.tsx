@@ -68,7 +68,7 @@ const Content = styled.div`
   }
   @media (max-width: 400px) {
     width: 100%;
-    transform: scale(1.0);
+    transform: none;
   }
 `;
 const BoxFooter = styled.div`
