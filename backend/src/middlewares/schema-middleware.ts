@@ -1,3 +1,4 @@
+import { logger } from "../config";
 import { invalidDataError } from "../erros";
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
@@ -21,7 +22,8 @@ function validate(schema: ObjectSchema, type: "body" | "params") {
     if (!error) {
       next();
     } else {
-      res.status(httpStatus.BAD_REQUEST).send(invalidDataError(error.details.map((error) => error.message)));
+      logger.error(`[MIDDLEWARE VALIDATE] Schema: ${schema}; Type: ${type}. Data: ${JSON.stringify(req[type])}. Error:${JSON.stringify(error?.details)}.`);
+      res.status(httpStatus.BAD_REQUEST).send(invalidDataError(error?.details?.map((error) => error?.message)));
     }
   };
 }
