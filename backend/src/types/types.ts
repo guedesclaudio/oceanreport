@@ -95,4 +95,6 @@ export type PostAndUserName = (PostData & {
     };
 });
 
-export type PostWithBRDate = (PostData & {hour: string, date: string});
+export type PostWithBRDate = (PostData & {hour?: string, date?: string});
+
+export type IFormatHour = {[key: number]: (atmData: AtmosphereData) => void};

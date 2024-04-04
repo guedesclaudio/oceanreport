@@ -4,12 +4,15 @@ import { offensiveWords } from "../../../helpers/posts-helpers";
 import { postContentIsNotValid } from "../../../erros/offensive-words-error";
 import { Post as PostData } from "@prisma/client";
 import { postsRepository } from "../repositories";
+import moment from 'moment-timezone';
 
 async function get(): Promise<PostWithBRDate[]> {
     const list: PostData[] = await postsRepository.list();
-    list?.forEach((value: any) => {
-        value.hour = `${new Date(value.createdAt).getHours()}:${new Date(value.createdAt).getMinutes()}`;
-        value.date = `${new Date(value.createdAt).getDate()}/${new Date(value.createdAt).getUTCMonth() + 1}/${new Date(value.createdAt).getFullYear()}`   
+    list?.forEach((value: PostWithBRDate) => {
+        const brazilianTime = moment.utc(value.createdAt).tz('America/Sao_Paulo');
+        
+        value.hour = `${brazilianTime.hours()}:${brazilianTime.minutes()}`;
+        value.date = `${brazilianTime.day()}/${brazilianTime.month()}/${brazilianTime.year()}`;   
     });
     this.checkPostDate();
     return list as PostWithBRDate[];

@@ -1,9 +1,10 @@
 import axios from "axios";
-import { OceanData, AtmosphereData, ReportObject } from "../../../types";
+import { OceanData, AtmosphereData, ReportObject, IFormatHour } from "../../../types";
 import { sendEmail } from "../../../helpers";
 import { checkReport } from "../../../helpers/report-helpers";
 import { redis } from "../../../config/redis";
 import usersRepository from "../../../modules/users/repositories/users-repository";
+import { formatHour } from "../../../helpers/format-hour-helpers";
 
 async function getReportToday(): Promise<string | ReportObject> {
   const reportExistsOnRedis: boolean = redis.exists("report");
@@ -37,7 +38,7 @@ async function generateReport(): Promise<void> {
       return sendEmail({emailsList, report});
     }
   } catch (error) {
-    return console.log(error, 'report error')
+    return console.log(error, 'report error');
   }
 }
 generateReport();
@@ -50,12 +51,15 @@ function generateReportObject(oceanData: OceanData, atmData: AtmosphereData): Re
   const waveCondition = checkReport.waveConditions(Number(Hsig));
   const temperatureCondition = checkReport.temperatureConditions(Number(Avg_W_Tmp1));
   const windSpeedCondition = checkReport.windConditions(Number(Avg_Wnd_Sp));
+  
+  handleData(atmData);
+
   const reportObject = {
     waveCondition,
     temperatureCondition,
     windSpeedCondition,
     date: `${atmData.DAY}/${atmData.MONTH}/${atmData.YEAR} `,
-    hour: `${Number(atmData.HOUR) - 3}:${atmData.MINUTE}`
+    hour: `${Number(atmData.HOUR)}:${atmData.MINUTE}`
   }
   
   return reportObject;
@@ -69,6 +73,14 @@ async function getOceanData(time: string): Promise<OceanData[]> {
 async function getAtmosphereData(time: string): Promise<AtmosphereData[]> {
   const url = `${process.env.API_REPORT_ATMOSPHERE_URL}/${time.slice(0, -3)}`;
   return (await axios.get(url)).data;
+}
+
+function handleData(atmData: any) {
+  if ([0,1,2].includes(Number(atmData.HOUR))) {
+    return formatHour[Number(atmData.HOUR)](atmData);
+  }
+  
+  atmData.HOUR = atmData.HOUR - 3;
 }
 
 const reportService = {
