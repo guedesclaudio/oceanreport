@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { Post } from "@prisma/client";
-import { prisma } from "@/config";
+import { prisma } from "../config";
 
 export async function createPost(userId: number): Promise<Post> {
 

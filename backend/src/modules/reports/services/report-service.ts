@@ -5,7 +5,7 @@ import { checkReport } from "../../../helpers/report-helpers";
 import { redis } from "../../../config/redis";
 import usersRepository from "../../../modules/users/repositories/users-repository";
 import { formatHour } from "../../../helpers/format-hour-helpers";
-import { logger } from "@/config";
+import { logger } from "../../../config";
 
 async function getReportToday(): Promise<string | ReportObject> {
   const reportExistsOnRedis: boolean = redis.exists("report");
