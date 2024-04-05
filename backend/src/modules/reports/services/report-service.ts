@@ -27,10 +27,8 @@ async function generateReport(): Promise<void> {
     const lastAtmosphereData = atmosphereData.slice(-1)[0];
 
     const report = generateReportObject(lastOceanData, lastAtmosphereData);
-    await Promise.all([
-      updateCache(report),
-      sendReportEmail(report),
-    ]);
+    await updateCache(report);
+    await sendReportEmail(report);
   } catch (error) {
     return logger.error(`[SERVICES - generateReport] Error: ${JSON.stringify(error)}`)
   }
@@ -44,7 +42,6 @@ function generateReportObject(oceanData: OceanData, atmData: AtmosphereData): Re
   const waveCondition = checkReport.waveConditions(Number(Hsig));
   const temperatureCondition = checkReport.temperatureConditions(Number(Avg_W_Tmp1));
   const windSpeedCondition = checkReport.windConditions(Number(Avg_Wnd_Sp));
-  
   handleDate(atmData);
 
   const reportObject = {
