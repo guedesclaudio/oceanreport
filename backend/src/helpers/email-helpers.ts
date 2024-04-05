@@ -3,7 +3,7 @@ import sgMail from '@sendgrid/mail';
 import dotenv from "dotenv";
 dotenv.config();
 
-const API_KEY = process.env.API_KEY_SENDGRID;
+const API_KEY_SENDGRID = process.env.API_KEY_SENDGRID;
 
 export async function sendEmail(data: Email) {
     const { 
@@ -14,7 +14,8 @@ export async function sendEmail(data: Email) {
         windSpeedCondition 
     } = data.report;
 
-    sgMail.setApiKey(API_KEY);
+    sgMail.setApiKey(API_KEY_SENDGRID);
+    
 
     for (let i = 0; i < data.emailsList.length; i++) {
         const { email, name } = data.emailsList[i];

@@ -5,6 +5,7 @@ import { checkReport } from "../../../helpers/report-helpers";
 import { redis } from "../../../config/redis";
 import usersRepository from "../../../modules/users/repositories/users-repository";
 import { formatHour } from "../../../helpers/format-hour-helpers";
+import { logger } from "@/config";
 
 async function getReportToday(): Promise<string | ReportObject> {
   const reportExistsOnRedis: boolean = redis.exists("report");
@@ -32,13 +33,12 @@ async function generateReport(): Promise<void> {
     const report = generateReportObject(lastOceanData, lastAtmosphereData);
     redis.set("report", JSON.stringify(report));
     
-    if (itsTimeSendEmail) {
-      const usersList = await usersRepository.findUsersWithReport();
-      const emailsList = usersList.map((value) => value);
-      return sendEmail({emailsList, report});
-    }
+    // if (itsTimeSendEmail) {
+    //   const emailsList = await usersRepository.findUsersWithReport();
+    //   return sendEmail({emailsList, report});
+    // }
   } catch (error) {
-    return console.log(error, 'report error');
+    return logger.error(`[SERVICES - generateReport] Error: ${JSON.stringify(error)}`)
   }
 }
 generateReport();
