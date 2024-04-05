@@ -3,7 +3,7 @@ import { postsService } from "../services";
 
 export function runCommandsPosts() {
     setInterval(async () => {
-        await postsService.checkPostDate();
+        await postsService.deleteOldPosts();
         logger.info(`[COMMANDS - runCommandsPosts] Running posts command, and delete old posts on database`);
-    }, 8640 * 10000);
+    }, 3600 * 100);
 };

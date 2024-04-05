@@ -24,19 +24,10 @@ function validateWords(postData: Post): void {
     if (existsOffensiveWords) throw postContentIsNotValid();
 }
 
-async function checkPostDate(): Promise<void> {
-    const today = new Date().getDate();
-    const list = await postsRepository.findPostDate();
-
-    for (let i in list) {
-        const postDate = list[i].createdAt.toDateString().split(" ")[2];
-        const postId = list[i].id;
-        const postIsOld = today - Number(postDate) >= 3;
-
-        if (postIsOld) {
-            await postsRepository.deletePost(postId);
-        }
-    }
+async function deleteOldPosts(): Promise<void> {
+    const posts = await postsRepository.findPostDate();
+    const oldPostsIds = getOldPostsIds(posts);
+    await postsRepository.deleteMany(oldPostsIds);
 }
 
 async function insert(postData: Post, userId: number): Promise<PostData> {
@@ -50,10 +41,24 @@ async function remove(postId: number): Promise<PostData> {
     return postsRepository.deletePost(postId);
 }
 
+function getPostDate(post: PostData): number {
+    return Number(post.createdAt.toDateString().split(" ")[2]);
+}
+
+function getOldPostsIds(posts: PostData[]): number[] {
+    const today = new Date().getDate();
+
+    return (posts?.filter((post) => {
+        const postDate = getPostDate(post)
+        const postIsOld = (today - postDate >= 1);
+        if (postIsOld) return post;
+    })).map((post) => post.id);
+}
+
 export const postsService = {
     insert,
     remove,
-    checkPostDate,
+    deleteOldPosts,
     validateWords,
     get
 }

@@ -1,6 +1,6 @@
 import { prisma } from "../../../config";
 import { Post, PostAndUserName } from "../../../types";
-import { Post as PostData } from "@prisma/client";
+import { Post as PostData, Prisma } from "@prisma/client";
 
 async function list(): Promise<PostAndUserName[]> {
     return prisma.post.findMany({
@@ -29,8 +29,18 @@ async function create(postData: Post, userId: number): Promise<PostData> {
 
 async function deletePost(postId: number): Promise<PostData> {
     return prisma.post.delete({
-            where: { id: postId }
+        where: { id: postId }
     });
+}
+
+async function deleteMany(postIds: number[]): Promise<Prisma.BatchPayload> {
+    return prisma.post.deleteMany({
+        where: {
+            id: {
+                in: postIds,
+            }
+        }
+    })
 }
 
 async function find(postId: number): Promise<PostData> {
@@ -49,4 +59,5 @@ export const postsRepository = {
     deletePost,
     find,
     findPostDate,
+    deleteMany,
 }
