@@ -14,7 +14,7 @@ async function get(): Promise<PostWithBRDate[]> {
         value.hour = `${brazilianTime.hours()}:${brazilianTime.minutes()}`;
         value.date = `${brazilianTime.day()}/${brazilianTime.month()}/${brazilianTime.year()}`;   
     });
-    this.checkPostDate();
+
     return list as PostWithBRDate[];
 }
 

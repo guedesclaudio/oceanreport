@@ -1,5 +1,5 @@
 import axios from "axios";
-import { OceanData, AtmosphereData, ReportObject, IFormatHour } from "../../../types";
+import { OceanData, AtmosphereData, ReportObject } from "../../../types";
 import { sendEmail } from "../../../helpers";
 import { checkReport } from "../../../helpers/report-helpers";
 import { redis } from "../../../config/redis";
@@ -19,29 +19,22 @@ async function getReportToday(): Promise<string | ReportObject> {
 
 async function generateReport(): Promise<void> {
   try {
-    const date = new Date;
-    const hour = date.getHours();
     const timestamp = Date.now();
     const time: string = timestamp.toString();
-    const itsTimeSendEmail = hour == 5 || hour == 17;
-    
     const oceanData = await getOceanData(time);
     const atmosphereData = await getAtmosphereData(time);
     const lastOceanData = oceanData.slice(-1)[0];
     const lastAtmosphereData = atmosphereData.slice(-1)[0];
 
     const report = generateReportObject(lastOceanData, lastAtmosphereData);
-    redis.set("report", JSON.stringify(report));
-    
-    // if (itsTimeSendEmail) {
-    //   const emailsList = await usersRepository.findUsersWithReport();
-    //   return sendEmail({emailsList, report});
-    // }
+    await Promise.all([
+      updateCache(report),
+      sendReportEmail(report),
+    ]);
   } catch (error) {
     return logger.error(`[SERVICES - generateReport] Error: ${JSON.stringify(error)}`)
   }
 }
-generateReport();
 
 function generateReportObject(oceanData: OceanData, atmData: AtmosphereData): ReportObject {
   const { Avg_W_Tmp1 } = oceanData;
@@ -52,7 +45,7 @@ function generateReportObject(oceanData: OceanData, atmData: AtmosphereData): Re
   const temperatureCondition = checkReport.temperatureConditions(Number(Avg_W_Tmp1));
   const windSpeedCondition = checkReport.windConditions(Number(Avg_Wnd_Sp));
   
-  handleData(atmData);
+  handleDate(atmData);
 
   const reportObject = {
     waveCondition,
@@ -75,12 +68,27 @@ async function getAtmosphereData(time: string): Promise<AtmosphereData[]> {
   return (await axios.get(url)).data;
 }
 
-function handleData(atmData: any) {
+function handleDate(atmData: any) {
   if ([0,1,2].includes(Number(atmData.HOUR))) {
     return formatHour[Number(atmData.HOUR)](atmData);
   }
   
   atmData.HOUR = atmData.HOUR - 3;
+}
+
+async function updateCache(report: ReportObject): Promise<void> {
+  return await redis.set("report", JSON.stringify(report));
+}
+
+async function sendReportEmail(report: ReportObject): Promise<void> {
+  const date = new Date();
+  const hour = date.getHours();
+  const itsTimeSendEmail = (hour == 5 || hour == 17);
+
+  if (itsTimeSendEmail) {
+    const emailsList = await usersRepository.findUsersWithReport();
+    await sendEmail({emailsList, report});
+  }
 }
 
 const reportService = {
