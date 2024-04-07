@@ -5,5 +5,5 @@ export function runCommandsReports() {
     setInterval(async () => {
         await reportService.generateReport();
         logger.info(`[COMMANDS - runCommandsReports] Running report command, and update data on cache`);
-    }, (3600));
+    }, (3600 * 100));
 };

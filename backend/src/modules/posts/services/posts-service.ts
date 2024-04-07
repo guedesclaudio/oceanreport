@@ -50,8 +50,8 @@ function getOldPostsIds(posts: PostData[]): number[] {
 
     return (posts?.filter((post) => {
         const postDate = getPostDate(post)
-        const postIsOld = (today - postDate >= 1);
-        if (postIsOld) return post;
+        const postItsOld = (today - postDate >= 1);
+        if (postItsOld) return post;
     })).map((post) => post.id);
 }
 
