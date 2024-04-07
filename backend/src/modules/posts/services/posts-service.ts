@@ -10,9 +10,8 @@ async function get(): Promise<PostWithBRDate[]> {
     const list: PostData[] = await postsRepository.list();
     list?.forEach((value: PostWithBRDate) => {
         const brazilianTime = moment.utc(value.createdAt).tz('America/Sao_Paulo');
-        
         value.hour = `${brazilianTime.hours()}:${brazilianTime.minutes()}`;
-        value.date = `${brazilianTime.day()}/${brazilianTime.month()}/${brazilianTime.year()}`;   
+        value.date = `${brazilianTime.date()}/${brazilianTime.month() + 1}/${brazilianTime.year()}`; 
     });
 
     return list as PostWithBRDate[];
