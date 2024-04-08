@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
     margin: 40px auto;
     width: 320px;
-    height: 300px;
+    height: ${(props: {height: string}) => props.height ? props.height : '320px'};
     background-color: #2c2e3d;
     padding: 10px;
     border-radius: 6px;
@@ -48,12 +48,12 @@ export const Input = styled.input`
 export const Button = styled.button`
     width: 300px;
     height: 30px;
-    background-color: none;
     margin-top: 10px;
-    background-color: #c2c2c2;
     border: none;
     cursor: pointer;
     transition: 1.4s;
+    background-color: ${(props: {backgroundColor: string}) => props.backgroundColor ? props.backgroundColor : '#c2c2c2'};
+    color:  ${(props: {color: string}) => props.color ? props.color : 'none'};
 
     &&:hover {
         opacity: 0.8;

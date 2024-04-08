@@ -24,8 +24,8 @@ export const SideBar: React.FC<any> = ({
   return (
     <Container displaySideBar = {displaySideBar} animationSideBar = {animationSideBar}>
       <Options>
-        <Option onClick = {user ? () => removeLogin(navigate) : () => navigate('/signin')}>
-          {user ? 'Sair': 'Login'}
+        <Option onClick = {user ? () => navigate('/account') : () => navigate('/signin')}>
+          {user ? 'Minha Conta': 'Login'}
         </Option>
         
         {links?.map((value, index) => <Option key = {index} onClick = {() => openPage(value.url)}>{value.name}</Option>)}

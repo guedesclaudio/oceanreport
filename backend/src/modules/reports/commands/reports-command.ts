@@ -8,5 +8,3 @@ export function reportCommand() {
         logger.info(`[COMMANDS - runCommandsReports] Running report command, and update data on cache`);
     });
 } 
-
-

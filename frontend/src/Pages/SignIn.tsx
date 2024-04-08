@@ -24,7 +24,6 @@ const SignIn: React.FC = () => {
   async function loginOAuth(provider: any) {
     try {
       const responseOAuth = await socialMediaAuth(provider);
-      console.log(responseOAuth, 'responseOAuth');
       const { accessToken, email, displayName } = responseOAuth;
       const { token, userId } = (await userApi.oAuth({ accessToken, email, displayName })).data;
       

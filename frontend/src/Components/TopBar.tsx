@@ -33,8 +33,8 @@ const TopBar: React.FC = () => {
       <Container>
         <Logo/>
         <Links>
-          <p onClick = {user ? () => removeLogin(navigate) : () => navigate('/signin')}>
-            {user ? 'Sair': 'Login'}
+          <p onClick = {user ? () => navigate('/account') : () => navigate('/signin')}>
+            {user ? 'Minha Conta': 'Login'}
           </p>
           {links?.map((value, index) => <Link key = {index} to = {value.url}><p>{value.name}</p></Link>)}
           <a href = {windyUrl} target = "_blank" rel="noreferrer">
