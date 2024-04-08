@@ -8,7 +8,6 @@ import moment from 'moment-timezone';
 import { deleteOldPostsCommand } from "../commands";
 
 async function get(): Promise<PostWithBRDate[]> {
-    deleteOldPostsCommand();
     const list: PostData[] = await postsRepository.list();
     list?.forEach((value: PostWithBRDate) => {
         const brazilianTime = moment.utc(value.createdAt).tz('America/Sao_Paulo');

@@ -2,8 +2,11 @@ import { logger } from "../../../config";
 import reportService from "../services/report-service";
 import schedule from 'node-schedule';
 
-export const reporttCommand = schedule.scheduleJob('* * * * *', async function(){
-    await reportService.generateReport();
-    logger.info(`[COMMANDS - runCommandsReports] Running report command, and update data on cache`);
-});
+export function reportCommand() {
+    schedule.scheduleJob('* * * * *', async function(){
+        await reportService.generateReport();
+        logger.info(`[COMMANDS - runCommandsReports] Running report command, and update data on cache`);
+    });
+} 
+
 
