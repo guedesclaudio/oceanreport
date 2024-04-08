@@ -5,8 +5,10 @@ import { postContentIsNotValid } from "../../../erros/offensive-words-error";
 import { Post as PostData } from "@prisma/client";
 import { postsRepository } from "../repositories";
 import moment from 'moment-timezone';
+import { deleteOldPostsCommand } from "../commands";
 
 async function get(): Promise<PostWithBRDate[]> {
+    deleteOldPostsCommand();
     const list: PostData[] = await postsRepository.list();
     list?.forEach((value: PostWithBRDate) => {
         const brazilianTime = moment.utc(value.createdAt).tz('America/Sao_Paulo');
