@@ -14,6 +14,6 @@ async function runRedis(): Promise<void> {
     logger.error(`Redis was connected with error. Error: ${error}`);
   }
 }
-runRedis();
+//runRedis();
 
 export const redis = redisClient;

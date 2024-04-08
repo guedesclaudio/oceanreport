@@ -40,16 +40,14 @@ async function remove(postId: number): Promise<PostData> {
     return postsRepository.deletePost(postId);
 }
 
-function getPostDate(post: PostData): number {
-    return Number(post.createdAt.toDateString().split(" ")[2]);
-}
 
 function getOldPostsIds(posts: PostData[]): number[] {
-    const today = new Date().getDate();
+    const today = new Date()
 
     return (posts?.filter((post) => {
-        const postDate = getPostDate(post)
-        const postItsOld = (today - postDate >= 1);
+        const postDate = new Date(post.createdAt);
+        postDate.setDate(postDate.getDate() + 2);
+        const postItsOld = (today >= postDate);
         if (postItsOld) return post;
     })).map((post) => post.id);
 }
