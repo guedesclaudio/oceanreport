@@ -5,7 +5,7 @@ import { postContentIsNotValid } from "../../../erros/offensive-words-error";
 import { Post as PostData } from "@prisma/client";
 import { postsRepository } from "../repositories";
 import moment from 'moment-timezone';
-import { deleteOldPostsCommand } from "../commands";
+import { logger } from "../../../config";
 
 async function get(): Promise<PostWithBRDate[]> {
     const list: PostData[] = await postsRepository.list();
@@ -25,9 +25,14 @@ function validateWords(postData: Post): void {
 }
 
 async function deleteOldPosts(): Promise<void> {
-    const posts = await postsRepository.findPostDate();
-    const oldPostsIds = getOldPostsIds(posts);
-    await postsRepository.deleteMany(oldPostsIds);
+    try {
+        const posts = await postsRepository.findPostDate();
+        const oldPostsIds = getOldPostsIds(posts);
+        await postsRepository.deleteMany(oldPostsIds);
+    } catch (error) {
+        logger.error(`[SERVICES - deleteOldPosts] An error has occurred when execute deleteOldPosts. Error: ${JSON.stringify(error)}`);
+        console.log(`[SERVICES - deleteOldPosts] An error has occurred when execute deleteOldPosts. Error: ${JSON.stringify(error)}`);
+    }
 }
 
 async function insert(postData: Post, userId: number): Promise<PostData> {

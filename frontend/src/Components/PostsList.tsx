@@ -27,9 +27,11 @@ const PostsList: React.FC<any> = ({ callApi, setCallApi }) => {
   return (
     <Container marginTop = {user ? '180px' : '-160px'}>
       {posts?.length === 0 ? <Message>Seja o primeiro a compartilhar um report</Message> : ''}
-      {posts?.map((value, index) => <Post key = {index} title = {value.Title} content = {value.Content} 
-        username = {value.User.name} userId = {value.userId} date = {value.date} hour = {value.hour} postId = {value.id}
-        setCallApi = {setCallApi}/>)}
+      {posts ? <>{
+        posts?.map((value, index) => <Post key = {index} title = {value.Title} content = {value.Content} 
+          username = {value.User.name} userId = {value.userId} date = {value.date} hour = {value.hour} postId = {value.id}
+          setCallApi = {setCallApi}/>)
+      }</> : <Message>carregando novos posts...</Message>}
       <ToastContainer theme = 'dark'/>
     </Container>
   );
