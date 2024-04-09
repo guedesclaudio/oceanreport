@@ -13,3 +13,10 @@ export function loginInvalidInformations(): ApplicationError {
     message: "Invalid informations to login",
   };
 }
+
+export function userNotFoundError(): ApplicationError {
+  return {
+    name: "UserNotFound",
+    message: "User not found in database",
+  };
+}

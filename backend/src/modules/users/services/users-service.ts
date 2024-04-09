@@ -1,5 +1,5 @@
-import { duplicatedEmailError, loginInvalidInformations } from "../../../erros";
-import { UserData, UserDataLogin, UserToken, OAuthDataLogin } from "../../../types";
+import { duplicatedEmailError, loginInvalidInformations, userNotFoundError } from "../../../erros";
+import { UserData, UserDataLogin, UserToken, OAuthDataLogin, UpdateUserData } from "../../../types";
 import { Session, User } from "@prisma/client";
 import { comparePassword, encryptedPassword, generateToken } from "../../../helpers";
 import { exclude } from "../../../helpers";
@@ -28,7 +28,8 @@ async function oAuthLoginUser(oAuthDataLogin: OAuthDataLogin): Promise<Omit<Sess
       email,
       password: accessToken.substring(0,200),
       name: displayName,
-      report: true
+      report: false,
+      isOAuth: true,
     }
     user = await usersRepository.insertUser(userData);
   }
@@ -43,22 +44,48 @@ async function checkUniqueEmail(email: string): Promise<void> {
   if (userExists) throw duplicatedEmailError;
 }
 
-async function checkLogin(UserDataLogin: UserDataLogin): Promise<number> {
-  const user = await usersRepository.findEmail(UserDataLogin.email);
+async function checkLogin(userDataLogin: UserDataLogin): Promise<number> {
+  const user = await usersRepository.findEmail(userDataLogin.email);
   
   if (!user) throw loginInvalidInformations();
 
-  const passwordIsValid = await comparePassword(UserDataLogin.password, user.password);
+  const passwordIsValid = await comparePassword(userDataLogin.password, user.password);
   
   if (!passwordIsValid) throw loginInvalidInformations();
 
   return user.id;
 }
 
+async function getUserAccountInformations(userId: number): Promise<User> {
+  return usersRepository.findById(userId);
+} 
+
+async function updateUser(userId: number, updateUserData: UpdateUserData) {
+  const user = await usersRepository.findById(userId);
+  if (!user) throw userNotFoundError();
+
+  await checkUpdatePasswords(user, updateUserData)
+
+  const updateUserModel = exclude(updateUserData, "confirmNewPassword", "newPassword", "oldPassword");
+  return usersRepository.updateById(userId, updateUserModel);
+}
+
+async function checkUpdatePasswords(user: User, updateUserData: UpdateUserData) {
+  if (updateUserData.newPassword) {
+    const passwordIsValid = await comparePassword(updateUserData.oldPassword, user.password);
+    if (!passwordIsValid) throw loginInvalidInformations();
+
+    if (updateUserData.newPassword !== updateUserData.confirmNewPassword) throw loginInvalidInformations();
+    updateUserData.password = updateUserData.newPassword;
+  }
+}
+
 const usersService = {
   insertUserWithData,
   loginUser,
-  oAuthLoginUser
+  oAuthLoginUser,
+  getUserAccountInformations,
+  updateUser,
 };
 
 export default usersService;
