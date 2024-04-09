@@ -18,12 +18,36 @@ const Report: React.FC = () => {
 
   async function refreshReport() {
     try {
-      const reponse = await reportApi.get();
-      setReport(reponse.data.report);
+      const response = await reportApi.get();
+      const reportData = response.data.report;
+
+      const updateReportGradually = (data: ReportObject) => {
+        const propertiesToAnimate = ['waveCondition', 'temperatureCondition', 'windSpeedCondition', 'date', 'hour'];
+        const interval = 100; 
+
+        propertiesToAnimate.forEach((property) => {
+          const fullText: any = data[property] as any;
+          let currentText = '';
+          let index = 0;
+
+          const timer = setInterval(() => {
+            if (index < fullText.length) {
+              currentText += fullText[index];
+              setReport((prevReport: any) => ({ ...prevReport, [property]: currentText }));
+              index++;
+            } else {
+              clearInterval(timer);
+            }
+          }, interval);
+        });
+      };
+
+      updateReportGradually(reportData);
     } catch (error: any) {
       toast('Ocorreu um erro e estamos trabalhando nisso!');
     }
   }
+
   useEffect(() => {
     refreshReport();
   }, []);
@@ -36,17 +60,17 @@ const Report: React.FC = () => {
         <Container>
           <Title>Condições oceânicas <MdWaves/></Title>
           <Text>
-            {report?.waveCondition} <TfiRuler/>
+            {report?.waveCondition ? report?.waveCondition : 'carregando dados de altura de onda...'} <TfiRuler/>
           </Text>
           <Text>
-            {report?.temperatureCondition} <FaTemperatureHigh/>
+            {report?.temperatureCondition ? report?.temperatureCondition : 'carregando dados de temperatura...'} <FaTemperatureHigh/>
           </Text>
           <Title>Condições meteorológicas <TiWeatherCloudy/></Title> 
           <Text>
-            {report?.windSpeedCondition} <TbWind />
+            {report?.windSpeedCondition ? report?.windSpeedCondition : 'carregando dados de velocidade do vento...'} <TbWind />
           </Text>
-          <Title>Data: {report?.date}</Title> 
-          <Title>Hora: {report?.hour}</Title>
+          <Title>Data: {report?.date ? report?.date : 'carregando data...'}</Title> 
+          <Title>Hora: {report?.hour ? report?.hour : 'carregando hora...' }</Title>
           <Warning>
             <Text style = {{ color: 'grey' }}>Local dos dados: Praia de Copacabana</Text>
             <Text style = {{ color: 'grey' }}>Esse report serve para as seguintes praias: São Conrado, Leblon, Ipanema, Copacabana, Leme, Piratininga, Camboinhas</Text>
