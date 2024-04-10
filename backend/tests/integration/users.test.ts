@@ -82,3 +82,22 @@ describe("POST /users/signin", () => {
     });
   });
 });
+
+describe('GET /users/account', () => {
+  describe('when body is not valid', () => {
+    it("should respond with status 400 when body is not given", async () => {
+      const response = await server.post("/users/account");
+      expect(response.status).toBe(httpStatus.BAD_REQUEST);
+    });
+
+    it("should respond with status 400 when body is not valid", async () => {
+      const invalidBody = { [faker.lorem.word()]: faker.lorem.word() };
+      const response = await server.post("/users/account").send(invalidBody);
+      expect(response.status).toBe(httpStatus.BAD_REQUEST);
+    });
+  });
+
+  describe("when body is valid", () => {
+    // Escrever testes de retorno do usuário quando o body é valido
+  });
+})

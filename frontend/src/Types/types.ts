@@ -33,6 +33,7 @@ export type ReportObject = {
     windSpeedCondition: string,
     date: string,
     hour: string
+    [key: string]: string;
 };
 
 export type Post = {

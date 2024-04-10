@@ -6,5 +6,6 @@ export function reportCommand() {
     schedule.scheduleJob('* * * * *', async function(){
         await reportService.generateReport();
         logger.info(`[COMMANDS - runCommandsReports] Running report command, and update data on cache`);
+        console.log(`[COMMANDS - runCommandsReports] Running report command, and update data on cache`);
     });
 } 

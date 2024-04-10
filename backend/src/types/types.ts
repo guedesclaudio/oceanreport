@@ -36,6 +36,7 @@ export type UserData = {
     email: string, 
     password: any,
     report: boolean
+    isOAuth?: boolean
 };
 
 export type ApplicationError = {
@@ -98,3 +99,13 @@ export type PostAndUserName = (PostData & {
 export type PostWithBRDate = (PostData & {hour?: string, date?: string});
 
 export type IFormatHour = {[key: number]: (atmData: AtmosphereData) => void};
+
+export type UpdateUserData = {
+    name?: string,
+    email?: string,
+    oldPassword?: string,
+    newPassword?: string,
+    confirmNewPassword?: string,
+    report?: boolean,
+    password?: string,
+};

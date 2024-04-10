@@ -7,17 +7,14 @@ import usersRepository from "../../../modules/users/repositories/users-repositor
 import { formatHour } from "../../../helpers/format-hour-helpers";
 import { logger } from "../../../config";
 
-let cache = '{}';
-
 async function getReportToday(): Promise<string | ReportObject> {
-  return JSON.parse(cache);
-  // const reportExistsOnRedis: boolean = redis.exists("report");
+  const reportExistsOnRedis: boolean = redis.exists("report");
   
-  // if (reportExistsOnRedis) {
-  //   const response: string = await redis.get("report");
-  //   return JSON.parse(response);
-  // };
-  // return "report não atualizado";
+  if (reportExistsOnRedis) {
+    const response: string = await redis.get("report");
+    return JSON.parse(response);
+  };
+  return "{}";
 }
 
 async function generateReport(): Promise<void> {
@@ -77,8 +74,7 @@ function handleDate(atmData: any) {
 }
 
 async function updateCache(report: ReportObject): Promise<void> {
-  cache = JSON.stringify(report);
-  //return await redis.set("report", JSON.stringify(report));
+  return await redis.set("report", JSON.stringify(report));
 }
 
 async function sendReportEmail(report: ReportObject): Promise<void> {
