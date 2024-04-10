@@ -4,10 +4,11 @@ import { useEffect, useState } from 'react';
 import postsApi from '../Services/Api/Posts';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { UserStorage } from '../Types/types';
 
 const PostsList: React.FC<any> = ({ callApi, setCallApi }) => {
   const [posts, setPosts] = useState<any[]>();
-  const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '') : null;
+  const user: UserStorage = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '') : null;
   
   async function listPosts() {
     try {

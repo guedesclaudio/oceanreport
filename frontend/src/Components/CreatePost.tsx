@@ -4,11 +4,13 @@ import postsApi from '../Services/Api/Posts';
 import { ChangeEvent, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { createConfigToApi } from '../Helpers/createConfigToApi';
+import { getUserFromLocalStorage } from '../Helpers/getUserLocalStorage';
 
 const CreatePost: React.FC<any> = ({ setCallApi }) => {
   const [form, setForm] = useState<any>();
-  const { token } = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '') : null;
-  const config = { headers: { 'Authorization': `Bearer ${token}` } };
+  const token = (getUserFromLocalStorage())?.token;
+  const config = createConfigToApi(token);
 
   async function post() {
     try {

@@ -56,8 +56,9 @@ async function checkLogin(userDataLogin: UserDataLogin): Promise<number> {
   return user.id;
 }
 
-async function getUserAccountInformations(userId: number): Promise<User> {
-  return usersRepository.findById(userId);
+async function getUserAccountInformations(userId: number): Promise<Omit<User, "password">> {
+  const user = await usersRepository.findById(userId);
+  return exclude(user, "password");
 } 
 
 async function updateUser(userId: number, updateUserData: UpdateUserData) {

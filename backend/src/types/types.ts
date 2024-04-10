@@ -109,3 +109,10 @@ export type UpdateUserData = {
     report?: boolean,
     password?: string,
 };
+
+export type UserAccountInformations = {
+    name: string,
+    email: string,
+    report?: boolean,
+    isOAuth?: boolean
+};

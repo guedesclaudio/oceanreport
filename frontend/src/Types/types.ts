@@ -51,3 +51,14 @@ export type LoginOAuth = {
     email: string,
     displayName: string
 };
+
+export type UserStorage = {
+    userId: number;
+    token: string;
+}
+
+export type ConfigApi = {
+    headers: {
+        'Authorization': string
+    }
+}

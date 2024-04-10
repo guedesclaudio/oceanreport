@@ -3,6 +3,7 @@ import httpStatus from "http-status";
 import { UserData, UserDataLogin, OAuthDataLogin, AuthenticatedRequest, UpdateUserData } from "../../../types";
 import usersService from "../services/users-service";
 import { logger } from "../../../config";
+import { User } from "@prisma/client";
 
 export async function createUser(req: Request, res: Response) {
   const userData = req.body
@@ -45,9 +46,8 @@ export async function loginOAuth(req: Request, res: Response) {
 
 export async function userAccount(req: AuthenticatedRequest, res: Response) {
   const userId = req.userId;
-
   try {
-    const response = usersService.getUserAccountInformations(userId);
+    const response = await usersService.getUserAccountInformations(userId);
     return res.status(httpStatus.OK).send(response);
   } catch (error) {
     logger.error(`[USERS - userAccount] Error: ${error?.message}`);
@@ -60,7 +60,7 @@ export async function updateUserAccount(req: AuthenticatedRequest, res: Response
   const updateUserData = req.body as UpdateUserData;
   
   try {
-    const response = usersService.updateUser(userId, updateUserData);
+    const response = await usersService.updateUser(userId, updateUserData);
     return res.status(httpStatus.OK).send(response);
   } catch (error) {
     logger.error(`[USERS - userAccount] Error: ${error?.message}`);
