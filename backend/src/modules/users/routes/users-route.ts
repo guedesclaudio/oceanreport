@@ -2,7 +2,7 @@ import { Router } from "express";
 import { validateBody } from "../../../middlewares/schema-middleware";
 import { createUser, loginOAuth, loginUser, updateUserAccount, userAccount } from "../controllers";
 import { createUserSchema, loginOAuthSchema, loginUserSchema, updateUserAccountSchema } from "../schemas";
-import { authenticateToken } from "@/middlewares";
+import { authenticateToken } from "../../../middlewares";
 
 const usersRouter = Router();
 
