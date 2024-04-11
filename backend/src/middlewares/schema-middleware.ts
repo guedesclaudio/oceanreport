@@ -22,7 +22,7 @@ function validate(schema: ObjectSchema, type: "body" | "params") {
     if (!error) {
       next();
     } else {
-      logger.error(`[MIDDLEWARE VALIDATE] Schema: ${schema}; Type: ${type}. Data: ${JSON.stringify(req[type])}. Error:${JSON.stringify(error?.details)}.`);
+      logger.error(`[MIDDLEWARE VALIDATE] Schema: ${schema}. Type: ${type}. Error:${JSON.stringify(error?.details)}.`);
       res.status(httpStatus.BAD_REQUEST).send(invalidDataError(error?.details?.map((error) => error?.message)));
     }
   };

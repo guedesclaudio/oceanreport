@@ -18,11 +18,17 @@ function getAccountInformations(config: ConfigApi) {
   return axios.get(`${baseUrl}/users/account`, config);
 }
 
+function postAccountInformations(data: any, config: ConfigApi) {
+  console.log(data, 'final data ##');
+  return axios.post(`${baseUrl}/users/account/update`, data, config);
+}
+
 const userApi = {
   post,
   login,
   oAuth,
-  getAccountInformations
+  getAccountInformations,
+  postAccountInformations
 };
 
 export default userApi;

@@ -11,6 +11,6 @@ usersRouter
   .post("/signin", validateBody(loginUserSchema), loginUser)
   .post("/signin/oauth", validateBody(loginOAuthSchema), loginOAuth)
   .get("/account", authenticateToken, userAccount)
-  .get("/account/update", authenticateToken, validateBody(updateUserAccountSchema), updateUserAccount);
+  .post("/account/update", authenticateToken, validateBody(updateUserAccountSchema), updateUserAccount);
 
 export default usersRouter;

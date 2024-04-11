@@ -71,13 +71,13 @@ async function updateUser(userId: number, updateUserData: UpdateUserData) {
   return usersRepository.updateById(userId, updateUserModel);
 }
 
-async function checkUpdatePasswords(user: User, updateUserData: UpdateUserData) {
+async function checkUpdatePasswords(user: User, updateUserData: UpdateUserData): Promise<void> {
   if (updateUserData.newPassword) {
     const passwordIsValid = await comparePassword(updateUserData.oldPassword, user.password);
     if (!passwordIsValid) throw loginInvalidInformations();
 
     if (updateUserData.newPassword !== updateUserData.confirmNewPassword) throw loginInvalidInformations();
-    updateUserData.password = updateUserData.newPassword;
+    updateUserData.password = await encryptedPassword(updateUserData.newPassword);
   }
 }
 

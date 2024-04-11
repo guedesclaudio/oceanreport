@@ -6,37 +6,60 @@ import BodyColor from '../Styles/BodyColor';
 import Switch from '@mui/material/Switch';
 import { removeLogin } from '../Helpers/removeLogin';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import userApi from '../Services/Api/Users';
-import { toast } from 'react-toastify';
-
+import { ToastContainer, toast } from 'react-toastify';
 import { getUserFromLocalStorage } from '../Helpers/getUserLocalStorage';
 import { createConfigToApi } from '../Helpers/createConfigToApi';
-import { Title } from './Report';
+
+import { handleForm, treatEvent } from '../Helpers/Form/form';
 
 const UserAccount: React.FC = () => {
+  const [form, setForm] = useState<any>();
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
   const navigate = useNavigate();
-  const [userAccountInformations, setUserAccountInformations] = useState<any/*UserAccountInformations*/>(); //TIPAR
+  const [userAccountInformations, setUserAccountInformations] = useState<any/*UserAccountInformations*/>({
+    name: 'carregando ...',
+    email: 'carregando ...'
+  });
   const user = (getUserFromLocalStorage());
   const config = createConfigToApi(user?.token);
 
+  function checkPasswordsFields() {
+    if(form?.newPassword && (!form?.confirmNewPassword || !form?.oldPassword)) return false;
+    if(form?.oldPassword && (!form?.confirmNewPassword || !form?.newPassword)) return false;
+    if(form?.confirmNewPassword && (!form?.oldPassword || !form?.newPassword)) return false;
+    if(form?.confirmNewPassword !== form?.newPassword) return false;
+  }
+  
+  async function sendUserInformations() {
+    try {
+      if(!form) {
+        toast('Informações atualizadas com sucesso!');
+        setTimeout(() => navigate('/'), 1500);
+      }
+      
+      if(!checkPasswordsFields()) return toast('Dados inválidos!');
+      
+      await userApi.postAccountInformations(form, config);
+      setForm({});
+      toast('Informações atualizadas com sucesso!');
+      return navigate('/');
+    } catch (error: any) {
+      return toast(`Não foi possível atualizar as informações da sua conta. Error: ${error.message}`);
+    }
+  }
+  
   async function getInformations() {
     try {
       const response = await userApi.getAccountInformations(config);
       setUserAccountInformations(response.data);
-    } catch (error) {
-      console.error(error);
-      toast('Ocorreu um erro e estamos trabalhando nisso!');
+    } catch (error: any) {
+      toast(`Ocorreu um erro e estamos trabalhando nisso!. Error: ${error.message}`);
     }
   }
-
-  //FAZER A DINÂMICA DE MUDAR OS VALORES CONFORME O USUÁRIO DIGITAR, E CHAMAR A API PRA DAR O POST
-  //CRIAR UM STYLED-COMPONENT DE MENSAGEM PRA PÁGINA NAO PERMITIDA
-  //SE FOR USUÁRIO OAUTH NÃO PODE TROCAR O EMAIL E SENHA, ESSES CAMPOS FICAM DESABILITADOS
-  //SE FOR USUÁRIO NORMAL PODE
-  console.log(userAccountInformations);
-
+  console.log(form);
+  
   useEffect(() => {
     getInformations();
   }, []);
@@ -52,23 +75,38 @@ const UserAccount: React.FC = () => {
               <Container height='500px'>
                 <SubTitle>Atualize suas informações</SubTitle>
                 <Inputs>
-                  <Input type='text' placeholder='nome' value = {userAccountInformations?.name}/>
-                  <Input type='email' placeholder='email' value = {userAccountInformations?.email}/>
-                  <Input type='password' placeholder='senha atual'/>
-                  <Input type='password' placeholder='nova senha'/>
-                  <Input type='password' placeholder='confirme sua nova senha'/>
-                  <SwitchBox>
-                    <Span>Deseja receber reports por email?</Span><Switch {...label} value={false}/>
-                  </SwitchBox>
-                  <Button>salvar</Button>
-                  <Button backgroundColor='orange' color='white' onClick={() => removeLogin(navigate)}>sair</Button>
-                  <Button backgroundColor='red' color='white' onClick={() => removeLogin(navigate)}>excluir conta</Button>
+                  <form onSubmit={() => treatEvent(sendUserInformations)}>
+                    <Input type='text' placeholder='nome' name='name' value = {(form?.name || form?.name === '') ? form?.name : userAccountInformations?.name}
+                      onChange = {(event: ChangeEvent<HTMLInputElement>) =>  handleForm({ name: event.target.name, value: event.target.value }, form, setForm)}/>
+                    { !userAccountInformations?.isOAuth ? 
+                      <>
+                        <Input type='email' placeholder='email' name='email' value = {(form?.email || form?.email === '') ? form?.email : userAccountInformations?.email}
+                          onChange = {(event: ChangeEvent<HTMLInputElement>) =>  handleForm({ name: event.target.name, value: event.target.value }, form, setForm)}/>
+                        <Input type='password' placeholder='senha atual' name='oldPassword' value = {form?.oldPassword ? form.oldPassword : ''}
+                          onChange = {(event: ChangeEvent<HTMLInputElement>) =>  handleForm({ name: event.target.name, value: event.target.value }, form, setForm)}/>
+                        <Input type='password' placeholder='nova senha' name='newPassword' value = {form?.newPassword ? form.newPassword : ''}
+                          onChange = {(event: ChangeEvent<HTMLInputElement>) =>  handleForm({ name: event.target.name, value: event.target.value }, form, setForm)}/>
+                        <Input type='password' placeholder='confirme sua nova senha' name='confirmNewPassword' value = {form?.confirmNewPassword ? form.confirmNewPassword : ''}
+                          onChange = {(event: ChangeEvent<HTMLInputElement>) =>  handleForm({ name: event.target.name, value: event.target.value }, form, setForm)}/>
+                      </> : <AlertUserOauth >Usuários Google não possuem a opção de atualizar email e senha</AlertUserOauth>}
+                    
+                    <SwitchBox>
+                      {/* <Span>Deseja receber reports por email?</Span><Switch name='report'  aria-checked checked={form?.report !== undefined ? form.report : userAccountInformations?.report}
+                        onChange = {(event: ChangeEvent<any>) => {
+                          const newValue = event.target.checked ? 'on' : 'off';
+                          handleForm({ name: event.target.name, value: newValue }, form, setForm);
+                        }}/> */}
+                    </SwitchBox>
+                    <Button type = 'submit'>salvar</Button>
+                    <Button onClick={() => removeLogin(navigate)}>sair</Button>
+                    <Button backgroundColor='#e42545' color='white' onClick={() => alert('Essa funcionalidade está em construção!')}>excluir conta</Button>
+                  </form>
                 </Inputs>
               </Container>
             </AccountBox>)
           </>
           : <h1 style={{ color: 'black', marginTop: '100px', textAlign: 'center', fontSize: '30px', fontFamily: 'Arial' }}>Você não possui permissão para acessar essa página.</h1>}
-        
+        <ToastContainer theme = 'dark'/>
         <Footer/>
       </>
     </>
@@ -98,4 +136,12 @@ const Span = styled.span`
   font-size: 14px;
   color: #b1b1b1;
   font-weight: bold;
+`;
+
+const AlertUserOauth = styled.p`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color: #b1b1b1;
+  font-weight: bold;
+  margin-top: 10px;
 `;
