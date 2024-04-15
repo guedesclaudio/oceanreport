@@ -23,7 +23,7 @@ const Report: React.FC = () => {
 
       const updateReportGradually = (data: ReportObject) => {
         const propertiesToAnimate = ['waveCondition', 'temperatureCondition', 'windSpeedCondition', 'date', 'hour'];
-        const interval = 100; 
+        const interval = 50; 
 
         propertiesToAnimate.forEach((property) => {
           const fullText: any = data[property] as any;
@@ -69,12 +69,12 @@ const Report: React.FC = () => {
           <Text>
             {report?.windSpeedCondition ? report?.windSpeedCondition : 'carregando dados de velocidade do vento...'} <TbWind />
           </Text>
-          <Title>Data: {report?.date ? report?.date : 'carregando data...'}</Title> 
-          <Title>Hora: {report?.hour ? report?.hour : 'carregando hora...' }</Title>
+          <Text>Data: {report?.date ? report?.date : 'carregando data...'}</Text>
+          <Text>Hora: {report?.hour ? report?.hour : 'carregando hora...' }</Text>
           <Warning>
             <Text style = {{ color: 'grey' }}>Local dos dados: Praia de Copacabana</Text>
             <Text style = {{ color: 'grey' }}>Esse report serve para as seguintes praias: São Conrado, Leblon, Ipanema, Copacabana, Leme, Piratininga, Camboinhas</Text>
-            <Text style = {{ color: 'grey' }}>Cada praia pode possui características diferentes, o que dificulta o nível de acertividade. 
+            <Text style = {{ color: 'grey' }}>Cada praia pode possuir características diferentes, o que dificulta o nível de acertividade. 
             Quando mais longe do ponto de origem dos dados (Copacabana), maior o risco do report não ser acertivo</Text> 
           </Warning>
         </Container>
@@ -90,16 +90,16 @@ export const Container = styled.div`
     width: 600px;
     height: 100%;
     margin: -200px auto;
-    border: 2px solid white;
+    border: 1px solid white;
     border-radius: 5px;
     background-color: #1d1c1c;
     padding: 20px;
     box-sizing: border-box;
 
     @media (max-width: 680px) {
-        width: 96%;
-        height: 100%;
-        margin-bottom: 80px;
+      width: 96%;
+      height: 100%;
+      margin-bottom: 80px;
     }
 `;
 export const Title = styled.p`
@@ -113,6 +113,7 @@ const Text = styled.p`
     margin-top: 10px;
     margin-bottom: 10px;
     font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
 `;
 const Warning = styled.div`
   margin-top: 40px;

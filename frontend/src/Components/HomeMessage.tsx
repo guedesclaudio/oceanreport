@@ -14,6 +14,7 @@ const HomeMessage: React.FC = () => {
           <IoChevronForwardCircle/>
         </Icon>
       </Link>
+      <Title style={{ paddingTop: '10px' }}>Versão beta 1.0.0</Title>
     </Container>
   );
 };

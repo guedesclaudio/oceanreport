@@ -99,11 +99,11 @@ const UserAccount: React.FC = () => {
                       </> : <AlertUserOauth >Usuários Google não possuem a opção de atualizar email e senha</AlertUserOauth>}
                     
                     <SwitchBox>
-                      {/* <Span>Deseja receber reports por email?</Span><Switch name='report'  aria-checked checked={form?.report !== undefined ? form.report : userAccountInformations?.report}
+                      <Span>Deseja receber reports por email?</Span><Switch name='report'  aria-checked checked={form?.report !== undefined ? form.report : userAccountInformations?.report}
                         onChange = {(event: ChangeEvent<any>) => {
-                          const newValue = event.target.checked ? 'on' : 'off';
+                          const newValue = event.target.checked;
                           handleForm({ name: event.target.name, value: newValue }, form, setForm);
-                        }}/> */}
+                        }}/>
                     </SwitchBox>
                     <Button type = 'submit' disabled={ conditionToDisabledInputs }>salvar</Button>
                     <Button onClick={() => removeLogin(navigate)}>sair</Button>

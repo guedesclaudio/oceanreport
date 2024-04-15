@@ -21,11 +21,11 @@ const Container = styled.div`
 `;
 export const Title = styled.h1`
     font-size: 34px;
-    color: white;
     font-family: 'Inter', sans-serif;
     text-align: center;
     font-weight: 700;
     padding-top: 100px;
+    color: ${(props: {color: string}) => props.color || 'white'};
 
     @media (max-width: 1200px) {
         font-size: 28px;
