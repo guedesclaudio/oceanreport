@@ -19,7 +19,6 @@ function getAccountInformations(config: ConfigApi) {
 }
 
 function postAccountInformations(data: any, config: ConfigApi) {
-  console.log(data, 'final data ##');
   return axios.post(`${baseUrl}/users/account/update`, data, config);
 }
 

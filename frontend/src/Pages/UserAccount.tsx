@@ -30,6 +30,7 @@ const UserAccount: React.FC = () => {
     if(form?.oldPassword && (!form?.confirmNewPassword || !form?.newPassword)) return false;
     if(form?.confirmNewPassword && (!form?.oldPassword || !form?.newPassword)) return false;
     if(form?.confirmNewPassword !== form?.newPassword) return false;
+    return true;
   }
   
   async function sendUserInformations() {
@@ -58,7 +59,8 @@ const UserAccount: React.FC = () => {
       toast(`Ocorreu um erro e estamos trabalhando nisso!. Error: ${error.message}`);
     }
   }
-  console.log(form);
+
+  console.log(userAccountInformations, 'aqui');
   
   useEffect(() => {
     getInformations();
