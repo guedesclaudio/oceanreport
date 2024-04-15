@@ -17,10 +17,11 @@ import { handleForm, treatEvent } from '../Helpers/Form/form';
 const UserAccount: React.FC = () => {
   const [form, setForm] = useState<any>();
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
+  const loadingText = 'carregando ...';
   const navigate = useNavigate();
   const [userAccountInformations, setUserAccountInformations] = useState<any/*UserAccountInformations*/>({
-    name: 'carregando ...',
-    email: 'carregando ...'
+    name: loadingText,
+    email: loadingText
   });
   const user = (getUserFromLocalStorage());
   const config = createConfigToApi(user?.token);
@@ -60,7 +61,7 @@ const UserAccount: React.FC = () => {
     }
   }
 
-  console.log(userAccountInformations, 'aqui');
+  const conditionToDisabledInputs = userAccountInformations?.name === 'carregando ...' ? true: false;
   
   useEffect(() => {
     getInformations();
@@ -79,16 +80,21 @@ const UserAccount: React.FC = () => {
                 <Inputs>
                   <form onSubmit={() => treatEvent(sendUserInformations)}>
                     <Input type='text' placeholder='nome' name='name' value = {(form?.name || form?.name === '') ? form?.name : userAccountInformations?.name}
+                      disabled={ conditionToDisabledInputs }
                       onChange = {(event: ChangeEvent<HTMLInputElement>) =>  handleForm({ name: event.target.name, value: event.target.value }, form, setForm)}/>
                     { !userAccountInformations?.isOAuth ? 
                       <>
                         <Input type='email' placeholder='email' name='email' value = {(form?.email || form?.email === '') ? form?.email : userAccountInformations?.email}
+                          disabled={ conditionToDisabledInputs }
                           onChange = {(event: ChangeEvent<HTMLInputElement>) =>  handleForm({ name: event.target.name, value: event.target.value }, form, setForm)}/>
                         <Input type='password' placeholder='senha atual' name='oldPassword' value = {form?.oldPassword ? form.oldPassword : ''}
+                          disabled={ conditionToDisabledInputs }
                           onChange = {(event: ChangeEvent<HTMLInputElement>) =>  handleForm({ name: event.target.name, value: event.target.value }, form, setForm)}/>
                         <Input type='password' placeholder='nova senha' name='newPassword' value = {form?.newPassword ? form.newPassword : ''}
+                          disabled={ conditionToDisabledInputs }
                           onChange = {(event: ChangeEvent<HTMLInputElement>) =>  handleForm({ name: event.target.name, value: event.target.value }, form, setForm)}/>
                         <Input type='password' placeholder='confirme sua nova senha' name='confirmNewPassword' value = {form?.confirmNewPassword ? form.confirmNewPassword : ''}
+                          disabled={ conditionToDisabledInputs }
                           onChange = {(event: ChangeEvent<HTMLInputElement>) =>  handleForm({ name: event.target.name, value: event.target.value }, form, setForm)}/>
                       </> : <AlertUserOauth >Usuários Google não possuem a opção de atualizar email e senha</AlertUserOauth>}
                     
@@ -99,7 +105,7 @@ const UserAccount: React.FC = () => {
                           handleForm({ name: event.target.name, value: newValue }, form, setForm);
                         }}/> */}
                     </SwitchBox>
-                    <Button type = 'submit'>salvar</Button>
+                    <Button type = 'submit' disabled={ conditionToDisabledInputs }>salvar</Button>
                     <Button onClick={() => removeLogin(navigate)}>sair</Button>
                     <Button backgroundColor='#e42545' color='white' onClick={() => alert('Essa funcionalidade está em construção!')}>excluir conta</Button>
                   </form>

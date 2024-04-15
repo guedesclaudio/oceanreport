@@ -8,7 +8,6 @@ import { formatHour } from "../../../helpers/format-hour-helpers";
 import { logger } from "../../../config";
 
 async function getReportToday(): Promise<string | ReportObject | void> {
-  return generateReport();
   const reportExistsOnRedis: boolean = redis.exists("report");
   
   if (reportExistsOnRedis) {
@@ -28,7 +27,7 @@ async function generateReport(): Promise<ReportObject | void> {
     const lastAtmosphereData = atmosphereData.slice(-1)[0];
 
     const report = generateReportObject(lastOceanData, lastAtmosphereData);
-    //await updateCache(report);
+    await updateCache(report);
     //await sendReportEmail(report);
     return report;
   } catch (error) {
