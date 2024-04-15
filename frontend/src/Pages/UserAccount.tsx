@@ -74,7 +74,7 @@ const UserAccount: React.FC = () => {
           <>
           (<BodyColor/>
             <AccountBox>
-              <Container height='500px'>
+              <Container height={ !userAccountInformations?.isOAuth ? '500px' : '290px' }>
                 <SubTitle>Atualize suas informações</SubTitle>
                 <Inputs>
                   <form onSubmit={() => treatEvent(sendUserInformations)}>

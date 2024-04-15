@@ -35,7 +35,7 @@ async function findUsersWithReport(): Promise<User[]> {
   });
 }
 
-async function findById(userId: number) {
+async function findById(userId: number): Promise<User> {
   return prisma.user.findUnique({
     where: {
       id: userId,
@@ -43,7 +43,7 @@ async function findById(userId: number) {
   })
 }
 
-async function updateById(userId: number, updateUserData: UpdateUserData) {
+async function updateById(userId: number, updateUserData: UpdateUserData): Promise<User> {
   return prisma.user.update({
     where: {
       id: userId
