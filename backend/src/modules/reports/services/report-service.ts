@@ -7,7 +7,8 @@ import usersRepository from "../../../modules/users/repositories/users-repositor
 import { formatHour } from "../../../helpers/format-hour-helpers";
 import { logger } from "../../../config";
 
-async function getReportToday(): Promise<string | ReportObject> {
+async function getReportToday(): Promise<string | ReportObject | void> {
+  return generateReport();
   const reportExistsOnRedis: boolean = redis.exists("report");
   
   if (reportExistsOnRedis) {
@@ -17,7 +18,7 @@ async function getReportToday(): Promise<string | ReportObject> {
   return "{}";
 }
 
-async function generateReport(): Promise<void> {
+async function generateReport(): Promise<ReportObject | void> {
   try {
     const timestamp = Date.now();
     const time: string = timestamp.toString();
@@ -29,6 +30,7 @@ async function generateReport(): Promise<void> {
     const report = generateReportObject(lastOceanData, lastAtmosphereData);
     await updateCache(report);
     await sendReportEmail(report);
+    return report;
   } catch (error) {
     return logger.error(`[SERVICES - generateReport] Error: ${JSON.stringify(error)}`)
   }
