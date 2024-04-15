@@ -4,7 +4,7 @@ import schedule from 'node-schedule';
 
 export function reportCommand() {
     schedule.scheduleJob('* * * * *', async function(){
-        await reportService.generateReport();
+        //await reportService.generateReport();
         logger.info(`[COMMANDS - runCommandsReports] Running report command, and update data on cache`);
         console.log(`[COMMANDS - runCommandsReports] Running report command, and update data on cache`);
     });
