@@ -8,13 +8,13 @@ import { formatHour } from "../../../helpers/format-hour-helpers";
 import { logger } from "../../../config";
 
 async function getReportToday(): Promise<string | ReportObject | void> {
-  const reportExistsOnRedis: boolean = redis.exists("report");
+  const reportExistsOnRedis: boolean = await redis.exists("report");
   
   if (reportExistsOnRedis) {
     const response: string = await redis.get("report");
     return JSON.parse(response);
   };
-  return "{}";
+  return await generateReport();
 }
 
 async function generateReport(): Promise<ReportObject | void> {
