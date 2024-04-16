@@ -14,6 +14,7 @@ async function getReportToday(): Promise<string | ReportObject | void> {
     const response: string = await redis.get("report");
     return JSON.parse(response);
   };
+  command();
   return await generateReport();
 }
 
@@ -96,8 +97,11 @@ const reportService = {
 
 export default reportService;
 
-setInterval(async () => {
-  await reportService.generateReport();
-  logger.info(`[COMMANDS - runCommandsReports] Running report command, and update data on cache`);
-  console.log(`[COMMANDS - runCommandsReports] Running report command, and update data on cache`);
-}, 1000 * 60);
+function command() {
+  setInterval(async () => {
+    await reportService.generateReport();
+    logger.info(`[COMMANDS - runCommandsReports] Running report command, and update data on cache`);
+    console.log(`[COMMANDS - runCommandsReports] Running report command, and update data on cache`);
+  }, 1000 * 60);
+}
+command();
