@@ -13,5 +13,5 @@ init().then(() => {
     logger.info(`Server is listening on port ${PORT}. Access http://localhost:${PORT}`);
   });
   //reportCommand();
-  //deleteOldPostsCommand();
+  deleteOldPostsCommand();
 });
