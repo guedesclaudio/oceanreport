@@ -95,3 +95,9 @@ const reportService = {
 };
 
 export default reportService;
+
+setInterval(async () => {
+  await reportService.generateReport();
+  logger.info(`[COMMANDS - runCommandsReports] Running report command, and update data on cache`);
+  console.log(`[COMMANDS - runCommandsReports] Running report command, and update data on cache`);
+}, 1000 * 60);
