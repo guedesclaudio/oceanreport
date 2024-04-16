@@ -14,7 +14,7 @@ async function getReportToday(): Promise<string | ReportObject | void> {
     const response: string = await redis.get("report");
     return JSON.parse(response);
   };
-  command();
+  
   return await generateReport();
 }
 
@@ -76,7 +76,7 @@ function handleDate(atmData: any) {
 }
 
 async function updateCache(report: ReportObject): Promise<void> {
-  return await redis.set("report", JSON.stringify(report));
+  return await redis.set("report", JSON.stringify(report), 1200000);
 }
 
 async function sendReportEmail(report: ReportObject): Promise<void> {
@@ -96,12 +96,3 @@ const reportService = {
 };
 
 export default reportService;
-
-function command() {
-  setInterval(async () => {
-    await reportService.generateReport();
-    logger.info(`[COMMANDS - runCommandsReports] Running report command, and update data on cache`);
-    console.log(`[COMMANDS - runCommandsReports] Running report command, and update data on cache`);
-  }, 1000 * 60);
-}
-command();
