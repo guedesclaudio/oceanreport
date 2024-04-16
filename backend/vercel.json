@@ -14,7 +14,7 @@
     ],
     "crons": [
         {
-            "path": "/src/modules/reports/commands/reports-command",
+            "path": "/api/cron/report.cronjob.ts",
             "schedule": "* * * * *"
         }
     ]
