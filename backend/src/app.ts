@@ -5,7 +5,6 @@ import { loadEnvs, connectDb, disconnectDB } from "./config";
 import reportRouter from "./modules/reports/routes/report-route";
 import usersRouter from "./modules/users/routes/users-route";
 import postsRouter from "./modules/posts/routes/posts-route";
-import { reportCommand } from "./modules/reports/commands";
 dotenv.config();
 loadEnvs();
 
@@ -20,7 +19,6 @@ app
 
 export function init(): Promise<Express> {
   connectDb();
-  reportCommand()
   return Promise.resolve(app);
 }
   
