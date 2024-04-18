@@ -6,13 +6,13 @@ import { redis } from "../../../config/redis";
 import usersRepository from "../../../modules/users/repositories/users-repository";
 import { formatHour } from "../../../helpers/format-hour-helpers";
 import { logger } from "../../../config";
-import { reportCommand } from "../commands";
 
 async function getReportToday(): Promise<string | ReportObject | void> {
-  reportCommand()
   const reportExistsOnRedis: boolean = await redis.exists("report");
-  
+  console.log('####### 1111')
   if (reportExistsOnRedis) {
+    console.log('#######')
+    setInterval(() => generateReport, 1000 * 60);
     const response: string = await redis.get("report");
     return JSON.parse(response);
   };
