@@ -6,7 +6,6 @@ import { redis } from "../../../config/redis";
 import usersRepository from "../../../modules/users/repositories/users-repository";
 import { formatHour } from "../../../helpers/format-hour-helpers";
 import { logger } from "../../../config";
-import schedule from 'node-schedule';
 
 async function getReportToday(): Promise<string | ReportObject | void> {
   const reportExistsOnRedis: boolean = await redis.exists("report");
@@ -15,12 +14,6 @@ async function getReportToday(): Promise<string | ReportObject | void> {
     const response: string = await redis.get("report");
     return JSON.parse(response);
   };
-  schedule.scheduleJob('* * * * *', async function(){
-    console.log('atualizando cacheee')
-    await reportService.generateReport();
-    logger.info(`[COMMANDS - runCommandsReports] Running report command, and update data on cache`);
-    console.log('atualizouuu')
-});
   return await generateReport();
 }
 

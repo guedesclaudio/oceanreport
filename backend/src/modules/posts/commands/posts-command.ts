@@ -6,6 +6,5 @@ export function deleteOldPostsCommand() {
     schedule.scheduleJob('* * * * *', async function(){
         await postsService.deleteOldPosts();
         logger.info(`[COMMANDS - runCommandsPosts] Running posts command, and delete old posts on database`);
-        console.log(`[COMMANDS - runCommandsPosts] Running posts command, and delete old posts on database`);
     });
 }
