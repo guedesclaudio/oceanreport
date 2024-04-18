@@ -76,7 +76,7 @@ function handleDate(atmData: any) {
 }
 
 async function updateCache(report: ReportObject): Promise<void> {
-  const expirationTimeSeconds = (30);
+  const expirationTimeSeconds = (60 * 5);
   return await redis.set("report", JSON.stringify(report), {
     EX: expirationTimeSeconds
   });
