@@ -9,10 +9,8 @@ import { logger } from "../../../config";
 
 async function getReportToday(): Promise<string | ReportObject | void> {
   const reportExistsOnRedis: boolean = await redis.exists("report");
-  console.log('####### 1111')
+  setInterval(() => generateReport, 1000);
   if (reportExistsOnRedis) {
-    console.log('#######')
-    setInterval(() => generateReport, 1000 * 60);
     const response: string = await redis.get("report");
     return JSON.parse(response);
   };
@@ -21,6 +19,7 @@ async function getReportToday(): Promise<string | ReportObject | void> {
 }
 
 async function generateReport(): Promise<ReportObject | void> {
+  console.log('atualizando report')
   try {
     const timestamp = Date.now();
     const time: string = timestamp.toString();
