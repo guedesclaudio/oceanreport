@@ -1,7 +1,5 @@
 import { createClient } from "redis";
 import { logger } from "./log";
-import { deleteOldPostsCommand } from "../modules/posts/commands";
-import { reportCommand } from "../modules/reports/commands";
 
 let redisClient: any;
 
@@ -17,7 +15,5 @@ async function runRedis(): Promise<void> {
   }
 }
 runRedis();
-reportCommand();
-deleteOldPostsCommand();
 
 export const redis = redisClient;
