@@ -18,7 +18,6 @@ async function getReportToday(): Promise<string | ReportObject | void> {
 }
 
 async function generateReport(): Promise<ReportObject | void> {
-  console.log('atualizando report')
   try {
     const timestamp = Date.now();
     const time: string = timestamp.toString();
