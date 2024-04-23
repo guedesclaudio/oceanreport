@@ -2,8 +2,8 @@ function temperatureConditions(temperature: number): string {
   if (temperature === null) return "\n Infelizmente não foi possível ter acesso aos dados de temperatura da água do mar";
   if (temperature >= 25) return createTemperatureText(temperature, 'quente');
   if (temperature >= 23 && temperature < 25) return createTemperatureText(temperature, 'fresca');
-  if (temperature >= 21 && temperature < 23) return createTemperatureText(temperature, 'ligeiramente gelada');
-  if (temperature >= 18 && temperature < 21) return createTemperatureText(temperature, 'um pouco gelada');
+  if (temperature >= 21 && temperature < 23) return createTemperatureText(temperature, 'um pouco gelada');
+  if (temperature >= 18 && temperature < 21) return createTemperatureText(temperature, 'gelada');
   if (temperature < 18 && temperature >= 16) return createTemperatureText(temperature, 'muito gelada');
   if (temperature < 16) return createTemperatureText(temperature, 'extremamente gelada');
 }
