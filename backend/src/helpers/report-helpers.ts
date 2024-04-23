@@ -55,6 +55,6 @@ function createTemperatureText(temperature: number, classification: string): str
     `\n A temperatura do mar água está ${classification}. Marcando aproximadamente ${temperature} °C.`,
     `\n A temperatura da água está ${classification}, marcando ${temperature} °C.`,
   ];
-  const randomIndex = Math.floor(Math.random() * possibilities.length);
+  const randomIndex = Math.floor(Math.random() * (possibilities.length - 1));
   return possibilities[randomIndex];
 }
