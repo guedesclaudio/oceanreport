@@ -1,0 +1,15 @@
+export const windClassification: { [key: string]: string } = {
+    '0-5': 'praticamente sem vento',
+    '5-10': 'com uma brisa muito leve',
+    '10-15': 'com uma brisa leve',
+    '15-20': 'com ventos fracos, podendo ter rajadas mais fortes',
+    '20-30': 'com ventos de intensidade fraca a mediana, podendo ter rajadas mais fortes',
+    '30-40': 'com ventos de intensidade mediana, podendo ter rajadas mais fortes',
+    '40-50': 'com ventos de intensidade mediana a forte, podendo ter rajadas mais fortes',
+    '50-60': 'com ventos de intensidade forte, podendo ter rajadas mais fortes',
+    '60-70': 'com ventos de intensidade muito fortes, podendo ter rajadas ainda mais fortes',
+    '70-80': 'Alerta! Com ventos de intensidade muito fortes, podendo ter rajadas ainda mais fortes',
+    '80-90': 'Alerta de vendaval! Com ventos de intensidade fortíssima, podendo ter rajadas ainda mais fortes',
+    '90-100': 'Alerta de tempestade ou ciclone extratropical! Com ventos de intensidade fortíssima, podendo ter rajadas ainda mais fortes',
+    '100-999': 'Alerta de ciclone tropical! Com ventos de intensidade fortíssima, podendo ter rajadas ainda mais fortes',
+};
