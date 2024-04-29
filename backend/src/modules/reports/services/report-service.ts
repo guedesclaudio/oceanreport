@@ -28,7 +28,7 @@ async function generateReport(): Promise<ReportObject | void> {
 
     const report = generateReportObject(lastOceanData, lastAtmosphereData);
     await updateCache(report);
-    //await sendReportEmail(report);
+    await sendReportEmail(report);
     return report;
   } catch (error) {
     return logger.error(`[SERVICES - generateReport] Error: ${JSON.stringify(error)}`)
