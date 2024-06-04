@@ -11,21 +11,21 @@
 </div>
 <br>
 
-# Arquitetura
+# Architecture
 <div align="center">
   <img src= 'frontend/src/img/arq-oceanreport.png'>
   <br>
 </div>
 <br>
 
-# Stack principal Frontend
+# Main Stack Frontend
 - React
 - TypeScript
 - Syled-components
 - Docker
 - Nginx
 
-# Stack principal Backend
+# Main Stack Backend
 - Node.js
 - TypeScript
 - Express
@@ -40,7 +40,7 @@
 - Nginx
 
 
-# Como iniciar
+# How to start
 1. Clone this repository
 2. Configure the .env according to the .env.example in the backend and frontend
 3. Run the command docker-compose:
