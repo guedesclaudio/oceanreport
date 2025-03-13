@@ -89,6 +89,7 @@ export default Report;
 export const Container = styled.div`
   max-width: 900px;
   margin: 60px auto;
+  margin-bottom: 120px;
   padding: 40px;
   background: linear-gradient(135deg, #1c1c1c, #292929);
   color: white;

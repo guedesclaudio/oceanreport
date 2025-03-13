@@ -26,7 +26,7 @@ const PostsList: React.FC<any> = ({ callApi, setCallApi }) => {
   }, [callApi]);
  
   return (
-    <Container marginTop = {user ? '180px' : '0px'}>
+    <Container>
       {posts?.length === 0 ? <Message>Seja o primeiro a compartilhar um report</Message> : ''}
       {posts ? <>{
         posts?.map((value, index) => <Post key = {index} title = {value.Title} content = {value.Content} 
@@ -42,8 +42,7 @@ export default PostsList;
 const Container = styled.div<any>`
   width: 500px;
   margin: 0px auto;
-  margin-top: ${(props: {marginTop: string}) => props.marginTop};
-  margin-bottom: 100px;
+  margin-top: 80px;
 
   @media (max-width: 500px) {
     width: 96%;

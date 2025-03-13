@@ -7,6 +7,7 @@ import { Title } from './Report';
 export const Container = styled.div`
   max-width: 900px;
   margin: 80px auto;
+  margin-bottom: 120px;
   padding: 40px;
   background: linear-gradient(135deg, #1c1c1c, #333);
   color: #fff;

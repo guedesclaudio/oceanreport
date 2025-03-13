@@ -31,6 +31,8 @@ const Container = styled.footer`
   justify-content: center;
   font-family: "Inter", sans-serif;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  bottom: 0;
 `;
 
 const Content = styled.div`
