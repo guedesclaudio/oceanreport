@@ -15,7 +15,7 @@ export default Panel;
 
 const Container = styled.div`
     width: 100%;
-    height: 400px;
+    height: 200px;
     background-color: #1d1c1c;
     margin-top: 60px;
 `;
@@ -24,7 +24,7 @@ export const Title = styled.h1`
     font-family: 'Inter', sans-serif;
     text-align: center;
     font-weight: 700;
-    padding-top: 100px;
+    padding-top: 80px;
     color: ${(props: {color: string}) => props.color || 'white'};
 
     @media (max-width: 1200px) {

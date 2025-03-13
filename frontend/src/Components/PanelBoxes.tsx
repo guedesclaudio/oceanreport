@@ -29,7 +29,7 @@ export default PanelBoxes;
 const Container = styled.div`
   width: 1200px;
   height: 100%;
-  margin: -160px auto;
+  margin: 80px auto;
   display: flex;
   align-items: center;
   justify-content: space-between;

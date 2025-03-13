@@ -87,34 +87,90 @@ const Report: React.FC = () => {
 export default Report;
 
 export const Container = styled.div`
-    width: 600px;
-    height: 100%;
-    margin: -200px auto;
-    border: 1px solid white;
-    border-radius: 5px;
-    background-color: #1d1c1c;
-    padding: 20px;
-    box-sizing: border-box;
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 40px;
+  background: linear-gradient(135deg, #1c1c1c, #292929);
+  color: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  line-height: 1.6;
+  font-size: 1.2rem;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 
-    @media (max-width: 680px) {
-      width: 96%;
-      height: 100%;
-      margin-bottom: 80px;
-    }
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+
+  @media (max-width: 768px) {
+    padding: 30px;
+    font-size: 1.1rem;
+  }
 `;
-export const Title = styled.p`
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 20px;
-    margin-top: 20px;
-`;
-const Text = styled.p`
-    color: white;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-family: Arial, Helvetica, sans-serif;
+
+export const Title = styled.h2`
+  font-size: 22px;
+  font-family: "Inter", sans-serif;
+  text-align: center;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  svg {
+    font-size: 32px;
+    color: #66c2ff;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  &:hover svg {
+    transform: scale(1.1);
+  }
+
+  @media (max-width: 500px) {
     font-size: 16px;
+  }
 `;
-const Warning = styled.div`
+
+export const Text = styled.p`
+  font-size: 18px;
+  margin: 10px 0;
+  font-family: "Inter", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  svg {
+    color: #ffa500;
+  }
+
+  @media (max-width: 500px) {
+    font-size: 16px;
+  }
+`;
+
+export const Warning = styled.div`
   margin-top: 40px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+`;
+
+export const WarningText = styled.p`
+  font-size: 16px;
+  color: #d6d6d6;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+
+  strong {
+    color: white;
+  }
 `;

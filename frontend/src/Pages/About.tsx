@@ -2,7 +2,33 @@ import TopBar from '../Components/TopBar';
 import Panel from '../Components/Panel';
 import Footer from '../Components/Footer';
 import styled from 'styled-components';
-import { Container, Title } from './Report';
+import { Title } from './Report';
+
+export const Container = styled.div`
+  max-width: 900px;
+  margin: 80px auto;
+  padding: 40px;
+  background: linear-gradient(135deg, #1c1c1c, #333);
+  color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  line-height: 1.6;
+  font-size: 26px;
+  font-weight: 400;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+
+  @media (max-width: 768px) {
+    margin: 50px auto;
+    padding: 30px;
+    font-size: 20px;
+  }
+`;
 
 const About: React.FC = () => {
   return (
