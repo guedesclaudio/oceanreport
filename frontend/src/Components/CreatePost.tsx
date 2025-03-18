@@ -44,7 +44,7 @@ const Container = styled.div`
   width: 500px;
   height: 240px;
   border: 2px solid white;
-  margin: -160px auto;
+  margin: 80px auto;
   background-color: #383636;
   border-radius: 10px;
 
